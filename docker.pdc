@@ -4,6 +4,7 @@ title: something Docker
 author: Stefan Lendl, selberherr, weinbub
 date: February 2016
 toc: 1
+toc-depth: 2
 ---
 
 #Abstract
@@ -12,56 +13,57 @@ toc: 1
 <!-- non technical -->
 
 ##evolution of virtualisation / Parallelism
+<!-- (1S) -->
 Multitasking, Virtualisation, Paravirtualisation, Container...
 Dedicated, Virtual, Container, ...?
 
-- **Ifrastructure as a Service** (IaaS)
+- **Infrastructure as a Service** (IaaS)
 - **Container as a Service** (CaaS)
 - **Platform as a Service** (PaaS)
 - **Software as a Service** (SaaS)
-<!-- (1S) -->
 
 ##Development ?? Centralised Development
 New way of developing and deploying online services on the example Heroku.
 
 #Technical
 
-List of operating system level virtualisation and container solutions.
-
-performance comparison vm - container [IEEE cite]
-
-<!-- - Xen -->
-<!-- - KVM -->
-<!-- - Virtalbox -->
-<!-- - Quemu -->
-<!-- - VMware -->
-
 ##Background
 - namespaces
 - cgroups
+- SELinux
+- AppArmor
+
+##Advantages over Virtual machines
+
+performance comparison vm - container [IEEE cite]
 
 ##Container Solutions
-
 - chroot - no isolation
 - FreeBSD Jails
 - Solaris Containers / Zones
 
 - OpenVZ
+- LXC
 - Docker
     common networking, riesige community, super easy setup Dockerfile...
 
 - libcontainer
-- LXC
-- LXD - Canonical
+- Rkt (rock-it)
+
+###LXD {-}
+Linux Container Daemon "lex-de"
+Canonical
 http://www.ubuntu.com/cloud/lxd
 security and isolation
-- Rkt (rock-it)
+
 - Parallels Virtuozzo Containers (now using Docker)
 http://www.virtuozzo.com/products/virtuozzo/migrate-to-virtuozzo/
-- Rkt (rock-it)
-- **OCF** Open Container Format
 - lmctfy - Google
 The maintainers in May 2015 stated their effort to merge their concepts and abstractions into Docker's underlying library libcontainer and thus stopped active development of lmctfy.[2]
+
+*test*
+
+- OCF Open Container Format
 - LKVM Intel Clear Container
   
 #Conclusion
