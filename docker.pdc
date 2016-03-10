@@ -1,83 +1,153 @@
 ---
 documentclass: scrartcl
-title: something Docker
-author: Stefan Lendl, selberherr, weinbub
-date: February 2016
+title: Container Virtualisation
+<!-- Comparison of Containers Virtualisation Frameworks -->
+author: Stefan Lendl, Selberherr, Weinbub
+date: April 2016
 toc: 1
 toc-depth: 2
 ---
 
-#Abstract
+#Abstract {-}
+In recent years operating system level virtualisation or more commonly known as containers have
+become more and more popular.
+This paper will give an overview of the techniques behind Containers.  This lightweight
+virtualisation is compared to traditional virtualisation techniques and found to significantly
+reduces overhead and allows the execution of many more instances than virtualisation can offer.
+Having shown the benefits of containers the most prominent Frameworks like Docker, LXC, LXD and rkt
+are underlined and compared.
 
 #Introduction
 <!-- non technical -->
 
-##evolution of virtualisation / Parallelism
-<!-- (1S) -->
-Multitasking, Virtualisation, Paravirtualisation, Container...
-Dedicated, Virtual, Container, ...?
+##Evolution of Virtualisation
+Dedicated, Multitasking, Virtualisation, Paravirtualisation, Container, Application Container
+
+
+Virtualisation traditionally emulates the hardware to the system running inside the virtual machine.
+The system inside believes it runs on a full system. The actual sharing of the hardware resources is
+done by the driver provided by the virtualisation software.
+
+Containers have a different approach. A container does not emulate hardware to the system inside but
+provides techniques to share the resources efficiently. Container uses a set of features in the
+Linux kernel to build isolation and improve security between individual containers and the host
+system.
+
+The techniques used are not new and have been implemented into the Linux kernel over the years.
+Together the form the base for container solutions available currently. The most important features
+used is described in the following.
+
+- namespaces
+- cgroups
+- SELinux
+- AppArmor
+- btrfs
+
+#Comparison of Containers to Virtual Machines
+
+performance comparison vm - container [IEEE cite]
+A couple references on research.
+
+#Container Solutions
+###chroot {-}
+no isolation
+###FreeBSD Jails {-}
+###Solaris Containers / Zones {-}
+
+###OpenVZ {-}
+(2001)
+
+###LXC {-}
+(2005?)
+
+###Docker {-}
+ (2008)
+Presently the most popular container solution is Docker. The success of Docker comes from it is
+simplicity, ease of use and the now very large community that provides all sorts of pre build
+containers that can be used and extended.
+
+common networking
+
+docker engine, daemon..
+
+The container is built using a Dockerfile. The first line in a Dockerfile specifies an image on
+which the container builds on. These base images can be a full operating system base like Ubuntu
+or Fedora or a minimalistic image only including Busybox. (The latter base image has less than 3MB.)
+
+Furthermore the Dockerfile contains instructions like installing packages through a container
+specific packet manager, running shell scripts, defining exposed ports or packing files into the
+container.  The container image is only what comes out of the build process and is immutable. These
+containers are very easily reproducible by defining specific versions of the dependency packages.
+(In the build process every build step is stored as a preliminary state of the finished build.
+Changing a line in the Dockerfile only requires only instructions after the changed line to be
+rerun.)
+
+The docker architecture aims for a container to be for a single pre build application only. To
+configure the application environment variables can be set at start of the container or more
+sophisticated applications can connect to a separate database to retrieve configuration.
+
+Docker used to use LXC as a base container format but changed to use of their own libcontainer [cite
+libcontainer].
+
+###Rkt {-}
+pronounced "rock-it" [TODO cite github] is an alternative open-source container implementation. Rkt
+took security into consideration from the early design. Rkt offers encryption and signing of images
+and provides a unique container identity.
+
+Other than in Docker rkt containers do not need a separate daemon to run. This eliminates the
+potential single point of failure that could cause many containers to crash in case of a critical
+error in the Docker engine.
+Rkt containers run directly under the init process when a systemd init system is used.
+
+###LXD {-} (2015)
+Linux Container Daemon, pronounced "lex-de", is a layer on top of LXC. It is developted by
+Canonical and first realeased in (October 2015 ??). In contrast to Docker, the focus is not on containerising a single application but having
+a full operating system running inside.
+
+In LXD the entry point for the container is not an application like in Docker but a full operating
+system init system like systemd [TODO cite]. The focus of LXD is to have a full OS running inside.
+LXD aims to be used in a cloud environment where currently virtualisation and virtual private
+servers are used.  To manage the container it exposes a secure REST API to allow management to be
+done through for example a cloud orchestration software like Cannoical's Juju (?) or OpenStack. LXD
+does not offer any network or storage management because because that should be done by the
+orchestration on top.  On the other hand it it offers life migration of containers to another host.
+Which is essentially important enable better dynamic load distribution in a cloud infrastructure.
+http://www.ubuntu.com/cloud/lxd
+(stateful snapshots, applications with slow startup time can be stored in the already started
+process. This is useful if an additional instance of an application has to be started up
+dynamically)
+
+###Bocker {-}
+(Docker in 100 Lines of Bash)
+builds on the features of btrfs.
+
+# Other things to mention
 
 - **Infrastructure as a Service** (IaaS)
 - **Container as a Service** (CaaS)
 - **Platform as a Service** (PaaS)
 - **Software as a Service** (SaaS)
 
-##Development ?? Centralised Development
-New way of developing and deploying online services on the example Heroku.
+- **Heroku** New way of developing and deploying online services.
 
-#Technical
-
-##Background
-- namespaces
-- cgroups
-- SELinux
-- AppArmor
-
-##Advantages over Virtual machines
-
-performance comparison vm - container [IEEE cite]
-
-##Container Solutions
-- chroot - no isolation
-- FreeBSD Jails
-- Solaris Containers / Zones
-
-- OpenVZ
-- LXC
-- Docker
-    common networking, riesige community, super easy setup Dockerfile...
-
-- libcontainer
-- Rkt (rock-it)
-
-###LXD {-}
-Linux Container Daemon "lex-de"
-Canonical
-http://www.ubuntu.com/cloud/lxd
-security and isolation
-
-- Parallels Virtuozzo Containers (now using Docker)
+- **Parallels Virtuozzo Containers** (now using Docker)
 http://www.virtuozzo.com/products/virtuozzo/migrate-to-virtuozzo/
-- lmctfy - Google
+
+- **lmctfy** - Google
 The maintainers in May 2015 stated their effort to merge their concepts and abstractions into Docker's underlying library libcontainer and thus stopped active development of lmctfy.[2]
 
-*test*
+- **OCF** Open Container Format
+- **LKVM** Intel Clear Container
 
-- OCF Open Container Format
-- LKVM Intel Clear Container
-  
-#Conclusion
-table for comparison
+#Conclusion {-}
+Table for comparison
 
-- isolation
-- networking (isolation)
-- security
-- commercial
-- licence
-- nested
-- partition checkpoint
-- live migration
-- CPU quotas
-- Storage Quotas
-- I/O limit
-- Memory limit
+Container | isolation | networking | security | commercial | licence | nested
+
+Container | live migration | stateful snapshot | CPU quotas | Storage Quotas | I/O limit | Memory limit
+
+(My oppinion..)
+
+#Closer {-}
+REST API
+OS
