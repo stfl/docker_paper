@@ -20,28 +20,41 @@ are underlined and compared.
 #Introduction
 <!-- non technical -->
 
-##Evolution of Virtualisation
-Dedicated, Multitasking, Virtualisation, Paravirtualisation, Container, Application Container
+( ##Evolution of Virtualisation )
+Historically every service offered would run on its own hardware. That immediatly lead to
+inefficiant use of resources when the service was not running at peak performance. In order to
+optimize the hardware utilization multiple services can be packed onto the same hardware, sharing the
+resources. To create a maximum of isolation and even run different operating systems on the same
+hardware simultaniously each service is executed in a virtual machine (VM).
 
-
-Virtualisation traditionally emulates the hardware to the system running inside the virtual machine.
+VMs emulate the hardware to the guest system running inside machine.
 The system inside believes it runs on a full system. The actual sharing of the hardware resources is
-done by the driver provided by the virtualisation software.
+done by the driver provided by the virtualisation software, the so called hypervisor.
+The hypervisor is responsible for sharing the hardware resources amongst the guests according to
+configurable ratings and limitations.
 
-Containers have a different approach. A container does not emulate hardware to the system inside but
+Containers have a different approach. A container does not emulate hardware but
 provides techniques to share the resources efficiently. Container uses a set of features in the
 Linux kernel to build isolation and improve security between individual containers and the host
 system.
+(only same os, only same kernel)
 
 The techniques used are not new and have been implemented into the Linux kernel over the years.
 Together the form the base for container solutions available currently. The most important features
-used is described in the following.
+are process namespaces and control groups (cgroups).
 
-- namespaces
-- cgroups
-- SELinux
-- AppArmor
-- btrfs
+**Namespaces** are used to group processes together and separated and isolated them from each other.
+Resources like network interfaces, interprocess communication and mount points from other namespaces
+are not visible. 
+
+**Control groups** are used to allow availabe hardware resources to be shared amoungs
+process groups.  Additionally limiting and rating the access to the resource is possible.  Limiting
+of CPU time, memory, storage or network quotas are typical. [container orchestration]
+
+(- SELinux
+ - AppArmor
+ - btrfs
+ - CRIU checkpoint/restore in userpace)
 
 #Comparison of Containers to Virtual Machines
 
@@ -51,6 +64,7 @@ A couple references on research.
 #Container Solutions
 ###chroot {-}
 no isolation
+
 ###FreeBSD Jails {-}
 ###Solaris Containers / Zones {-}
 
@@ -81,6 +95,10 @@ containers are very easily reproducible by defining specific versions of the dep
 (In the build process every build step is stored as a preliminary state of the finished build.
 Changing a line in the Dockerfile only requires only instructions after the changed line to be
 rerun.)
+
+"The life-time of a container matches the life-time of the command you run within it. A container
+can be run for a single command execution and terminated immidately afterwards, or you can keep them
+running with a long-running command." [container and orchistration]
 
 The docker architecture aims for a container to be for a single pre build application only. To
 configure the application environment variables can be set at start of the container or more
@@ -151,3 +169,7 @@ Container | live migration | stateful snapshot | CPU quotas | Storage Quotas | I
 #Closer {-}
 REST API
 OS
+
+#References
+[docker] J. Turnbull,  The Docker Book, 2014; www .dockerbook.com.
+
