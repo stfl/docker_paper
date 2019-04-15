@@ -63,9 +63,8 @@ Several ways of sharing hardware resources are available which significantly dif
 
 - **Hybrid VM containers** is a new development of combining the benefits of isolation provided by VMs and the flexibility of containers.
 
-The first approach of shared hosting does not offer any significant isolation between the processes and does not offer additional protection against security threats.
-<!-- TODO introduce security threads -->
-Installing different versions of applications or libraries in a host system is typically difficult because common package managers like DPKG [@DebianPackageManager] and RPM [@RPMPackageManager] do no allow the installation of multiple versions in the system.
+The first approach of shared hosting does not offer any significant isolation between processes, which is an important measure to protect services against security violation and escalation in other services on the same host.
+Furthermore, Installing different versions of applications or libraries in a host system is typically difficult because common package managers like DPKG [@DebianPackageManager] and RPM [@RPMPackageManager] do no allow the installation of multiple versions in the system.
 
 When Using the system call chroot to create a so called jail, the effected process can only access files within this subdirectory. This allows isolation between processes on filesystem level and effortless installation of different library versions on the same system. Several ways to break out of such a jail exist [@BreakingOutChroot2016] and it is therefore not considered secure.
 
