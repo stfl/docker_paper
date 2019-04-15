@@ -3,7 +3,7 @@
   title = {Container-Based Operating System Virtualization: A Scalable, High-Performance Alternative to Hypervisors},
   volume = {41},
   shorttitle = {Container-Based Operating System Virtualization},
-  booktitle = {{{ACM SIGOPS Operating Systems Review}}},
+  booktitle = {{{ACM SIGOPS Operating Systems Review}} ({{OSR}})},
   publisher = {{ACM}},
   author = {Soltesz, Stephen and P\"otzl, Herbert and Fiuczynski, Marc E. and Bavier, Andy and Peterson, Larry},
   year = {2007},
@@ -58,7 +58,7 @@
   shorttitle = {How Does Docker Affect Energy Consumption?},
   doi = {10.1016/j.jss.2018.07.077},
   language = {en},
-  journal = {Journal of Systems and Software},
+  journal = {Journal of Systems and Software (J. Syst. Softw.)},
   note = {\url{https://linkinghub.elsevier.com/retrieve/pii/S0164121218301456}},
   author = {Santos, Eddie Antonio and McLean, Carson and Solinas, Christopher and Hindle, Abram},
   month = dec,
@@ -68,8 +68,9 @@
 }
 
 @misc{wilmottDockerImplemented1002019,
-  title = {Docker Implemented in around 100 Lines of Bash. {{Contribute}} to P8952/Bocker Development by Creating an Account on {{GitHub}}},
+  title = {Docker {{Implemented}} in {{Around}} 100 {{Lines}} of {{Bash}}.},
   copyright = {GPL-3.0},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/p8952/bocker}},
   author = {Wilmott, Peter},
   month = jan,
@@ -77,8 +78,9 @@
 }
 
 @misc{RunCCLITool2019,
-  title = {{{runC}}: {{CLI}} Tool for Spawning and Running Containers According to the {{OCI}} Specification: Opencontainers/Runc},
+  title = {{{runC}}: {{CLI Tool}} for {{Spawning}} and {{Running Containers According}} to the {{OCI Specification}}.},
   shorttitle = {{{CLI}} Tool for Spawning and Running Containers According to the {{OCI}} Specification},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/opencontainers/runc}},
   month = jan,
   year = {2019}
@@ -92,7 +94,7 @@
 }
 
 @misc{DockerIntroducingExecution2014,
-  title = {Docker 0.9: Introducing Execution Drivers and Libcontainer},
+  title = {Docker 0.9: {{Introducing Execution Drivers}} and Libcontainer},
   shorttitle = {Docker 0.9},
   abstract = {Fellow Dockers, Today we are happy to introduce Docker 0.9. With this release we are continuing our focus on quality over features, shrinking and stabilizing the core, and providing first-class support for all major operating systems. In addition to dozen of bug fixes, Docker 0.9 includes 2 major improvements: execution drivers and libcontainer. As usual, for a complete list of improvements, you can check out the Changelog. ~ Execution drivers First, we are introducing an execution driver API which can be used to customize the execution environment surrounding each container. This allows Docker to take advantage of the numerous isolation tools available, each with their particular tradeoffs and install base: OpenVZ, systemd-nspawn, libvirt-lxc, libvirt-sandbox, qemu/kvm, BSD Jails, Solaris Zones, and even good old chroot. This is in addition to LXC, which will continue to be available as a driver of Continue reading...},
   language = {en},
@@ -115,7 +117,7 @@
 
 @inproceedings{waltersComparisonVirtualizationTechnologies2008,
   title = {A Comparison of Virtualization Technologies for {{HPC}}},
-  booktitle = {Advanced {{Information Networking}} and {{Applications}}, 2008. {{AINA}} 2008. 22nd {{International Conference}} On},
+  booktitle = {Advanced {{Information Networking}} and {{Applications}} ({{AINA}})},
   publisher = {{IEEE}},
   author = {Walters, John Paul and Chaudhary, Vipin and Cha, Minsuk and Guercio Jr, Salvatore and Gallo, Steve},
   year = {2008},
@@ -124,7 +126,7 @@
 }
 
 @misc{Docker11First2016,
-  title = {Docker 1.11: {{The}} First Runtime Built on Containerd and Based on {{OCI}} Technology},
+  title = {Docker 1.11: {{The First Runtime Built}} on {{Containerd}} and {{Based}} on {{Oci Technology}}},
   shorttitle = {Docker 1.11},
   abstract = {We are excited to introduce Docker Engine 1.11, our first release built on runC \texttrademark{}~and containerd \texttrademark. With this release, Docker is~the~first to ship a runtime based on~OCI technology,~demonstrating the progress the team has~made since donating our industry-standard container format and runtime under the Linux Foundation in June~of 2015. Over the last year, Docker has helped advance the work of the OCI to make it more readily available to more users. It started in December 2015,~when we introduced containerd \texttrademark, a daemon to control runC. This was part of our effort to break out Docker into small reusable components. With this release, Docker Engine is now built on containerd, so everyone who is using Docker is now using OCI. We're proud of the progress we've made on the OCI with the 40+ members to continue the work to standardize container Continue reading...},
   language = {en},
@@ -136,8 +138,8 @@
 }
 
 @phdthesis{ederInfrastructureAgnosticApplication2017,
-  address = {Wien},
-  title = {An Infrastructure Agnostic Application Deployment Framework for the {{Internet}} of Things},
+  address = {Technical University Vienna},
+  title = {An {{Infrastructure Agnostic Application Deployment Framework}} for the {{Internet}} of {{Things}}},
   abstract = {ger: In den letzten Jahren wurden Begriffe wie Smart Grid, Smart City, oder Smart Vehicles immer popul\"arer. Sie fallen alle unter das Konzept des Internet der Dinge (IoT). Sch\"atzungen zufolge werden im Jahr 2020 bis zu 34 Milliarden Ger\"ate mit dem Internet verbunden sein. Das gro\ss{}e Potenzial von IoT ist mit vielen Herausforderungen verbunden. Neben Aspekten wie Privatsph\"are, Sicherheit, Skalierbarkeit, etc., ist die Infrastruktur des IoT ein erhebliches Problem. Die gro\ss{}e Anzahl an unterschiedlichen Ger\"aten f\"uhrt zu einem sehr heterogenen Umfeld. Die Entwicklung von Applikationen, welche diese heterogene Infrastruktur ber\"ucksichtigt, wird dadurch \"au\ss{}erst komplex und fehleranf\"allig. Eine m\"ogliche L\"osung f\"ur dieses Problem ist durch Virtualisierung die Plattform zu abstrahieren. Im Zuge dieser Diplomarbeit wird die Verwendung von Betriebssystemvirtualisierung in Verbindung mit dieser heterogenen Umgebung untersucht. In diesem Zusammenhang werden h\"aufig verwendete IoT Ger\"ate vorgestellt. Zudem erfolgt eine detaillierte Beschreibung der Virtualisierung in verschiedenen Betriebssystemen (z.B.: Linux, FreeBSD, Solaris, Windows). Neben der Vorstellung von aktuellen Container Engines mit Fokus auf Linux, wird auch das Konzept der Continuous Delivery erl\"autert. Zur Demonstrierung der Anwendbarkeit der Betriebssystemvirtualisierung im Kontext von IoT, wird ein Application Deployment Framework entwickelt. Dieses Framework bietet die M\"oglichkeit Applikationen mit einem Klick zu verteilen und einzusetzen. Zus\"atzlich erlaubt es das Einsetzen auf verschiedenen CPU-Architekturen (z.B.: ARM, x86) und vereinfacht die Integrierung in eine bereits vorhandene Continuous Delivery Pipeline durch eine REST API. Die Funktionen des Frameworks werden durch den Einsatz eines Geb\"audemanagementsystems veranschaulicht. Im letzten Teil der Diplomarbeit, wird die Verwendung von verschiedenen Applikationen auf unterschiedlichen Ger\"aten hinsichtlich der Realisierbarkeit und Anwendbarkeit des vorgestellten Ansatzes evaluiert und diskutiert.; eng: In the last years terms like Smart Grid, Smart City or Smart Vehicle, became increasingly popular. They all fall under the conception of the so called Internet of Things (IoT). It is estimated that in 2020 will be up to 34 billion devices connected with the Internet. However, the huge potentials of IoT come with various challenges. Among issues like privacy, security, scalability, etc., the infrastructure in IoT is a significant problem. The huge amount of different devices leads to a highly heterogeneous environment. Thus, developing applications that respect these heterogeneous infrastructures is exceedingly complex and in further consequence very error prone. A possible solution to this problem is to abstract the platform through virtualization. In the course of this thesis we investigate how operating-system-level virtualization can be used to cope with the heterogeneous environment. Therefore, commonly used IoT devices are presented and an in-depth explanation of how operating-system-level virtualization is implemented on different operating systems (e.g., Linux, FreeBSD, Solaris, Windows) is given. Furthermore, currently available container engines with focus on Linux are introduced and compared. We also explain the concept of continuous delivery, and why this development approach facilitates agile development. To show the feasibility of operating-system-level virtualization in the context of IoT, a prototype of an application deployment framework is developed. This framework provides distribution and deployment of applications within one click. Furthermore, it allows to deploy on different CPU-architectures (e.g., ARM, x86) transparently to the user. Additionally, it can easily be integrated within a continuous delivery pipeline through a REST API. The features of the framework are demonstrated via the deployment of a Building Managament System (BMS). In the last part of the thesis, the deployment time of different applications on various devices is evaluated and discussed, which shows both, feasibility and applicability of the proposed approach.},
   author = {Eder, Peter},
   year = {2017},
@@ -145,7 +147,7 @@
 }
 
 @misc{StorageDrivers2019,
-  title = {About Storage Drivers},
+  title = {About {{Storage Drivers}}},
   abstract = {Learn the technologies that support storage drivers.},
   language = {en},
   journal = {Docker Documentation},
@@ -192,6 +194,7 @@
 
 @misc{AppContainerSpecification2019,
   title = {App {{Container Specification}} and {{Tooling}}.},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/appc/spec/blob/master/SPEC.md}},
   month = jan,
   year = {2019}
@@ -199,19 +202,21 @@
 
 @misc{AppContainerSpecification2019README,
   title = {App {{Container Specification}} and {{Tooling}}. {{README}}},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/appc/spec/blob/master/README.md}},
   month = jan,
   year = {2019}
 }
 
 @misc{WhatKubernetesUsers,
-  title = {What {{Kubernetes}} Users Should Know about the Rkt Container Engine | {{CoreOS}}},
+  type = {{{CoreOS Blog}}},
+  title = {What {{Kubernetes Users Should Know About}} the Rkt {{Container Engine}}},
   howpublished = {\url{https://coreos.com/blog/rkt-and-kubernetes.html}},
   file = {/home/sll/Zotero/storage/8SPPN7SY/rkt-and-kubernetes.html}
 }
 
 @misc{RktnetesBringsRkt,
-  title = {Rktnetes Brings Rkt Container Engine to {{Kubernetes}}},
+  title = {Rktnetes {{Brings}} Rkt {{Container Engine}} to {{Kubernetes}}},
   abstract = {Editor's note: this post is part of~a series of in-depth articles on what's new in Kubernetes 1.3~
 As part of Kubernetes 1.3, we're happy to report that our work to bring interchangeable container engines to Kubernetes is bearing early fruit. What we affectionately call ``rktnetes'' is included in the version 1.3 Kubernetes release, and is ready for development use. rktnetes integrates support for CoreOS rkt into Kubernetes as the container runtime on cluster nodes, and is now part of the mainline Kubernetes source code.},
   language = {en},
@@ -228,8 +233,9 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 }
 
 @misc{CoreOSRktOCI2019,
-  title = {{{CoreOS}} Rkt {{OCI}} Native Support | Current Project State.},
+  title = {{{CoreOS}} Rkt {{OCI Native Support}} | {{Current Project State}}.},
   shorttitle = {Rkt Is a Pod-Native Container Engine for {{Linux}}. {{It}} Is Composable, Secure, and Built on Standards.},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/rkt/rkt/projects/4}},
   month = jan,
   year = {2019}
@@ -237,6 +243,7 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 
 @misc{Systemd,
   title = {Systemd},
+  journal = {Freedesktop.org},
   howpublished = {\url{https://freedesktop.org/wiki/Software/systemd/}},
   file = {/home/sll/Zotero/storage/RMPL237Z/systemd.html}
 }
@@ -248,7 +255,7 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 }
 
 @misc{OpenStack,
-  title = {{{OpenStack}}: {{Build}} the Future of {{Open Infrastructure}}.},
+  title = {Openstack: {{Build}} the {{Future}} of {{Open Infrastructure}}.},
   howpublished = {\url{https://www.openstack.org/}},
   file = {/home/sll/Zotero/storage/6UIKS8DY/www.openstack.org.html}
 }
@@ -272,10 +279,9 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 }
 
 @misc{CloudFoundryOpen,
-  title = {Cloud {{Foundry}}: {{Open Source Cloud Application Platform}}},
+  title = {Cloud {{Foundry}} - {{Open Source Cloud Application Platform}}},
   abstract = {Open Source Cloud Application Platform Backed by Cisco, Google, IBM, Microsoft, Pivotal, SAP, SUSE and more Cloud Foundry makes it faster and easier to build, test, deploy and scale applications, providing a choice of clouds, developer frameworks, and application services. It is an open source project and is available through a variety of private cloud \ldots{} Continue reading "Home"},
   language = {en-US},
-  journal = {Cloud Foundry},
   howpublished = {\url{https://www.cloudfoundry.org/}},
   file = {/home/sll/Zotero/storage/942BBVMJ/www.cloudfoundry.org.html}
 }
@@ -335,6 +341,7 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
   title = {Intel {{Clear Containers}}},
   copyright = {Apache-2.0},
   shorttitle = {{{OCI}} ({{Open Containers Initiative}}) Compatible Runtime Using {{Virtual Machines}}},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/clearcontainers/runtime}},
   month = jan,
   year = {2019}
@@ -345,7 +352,6 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
   abstract = {Apache Mesos abstracts resources away from machines,
                    enabling fault-tolerant and elastic distributed systems
                    to easily be built and run effectively.},
-  journal = {Apache Mesos},
   howpublished = {\url{http://mesos.apache.org/documentation/latest/mesos-containerizer/}},
   file = {/home/sll/Zotero/storage/7A72KJN5/mesos-containerizer.html}
 }
@@ -355,13 +361,12 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
   abstract = {Apache Mesos abstracts resources away from machines,
                    enabling fault-tolerant and elastic distributed systems
                    to easily be built and run effectively.},
-  journal = {Apache Mesos},
   howpublished = {\url{http://mesos.apache.org/}},
   file = {/home/sll/Zotero/storage/GHCVRNW9/mesos.apache.org.html}
 }
 
 @misc{KataContainersSpeed,
-  title = {Kata {{Containers}} - {{The}} Speed of Containers, the Security of {{VMs}}},
+  title = {Kata {{Containers}} - the {{Speed}} of {{Containers}}, the {{Security}} of {{Vms}}},
   howpublished = {\url{https://katacontainers.io/}},
   file = {/home/sll/Zotero/storage/UCF2YR2W/katacontainers.io.html}
 }
@@ -398,11 +403,10 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 }
 
 @misc{NablaContainersNew,
-  title = {Nabla Containers: A New Approach to Container Isolation},
+  title = {Nabla {{Containers}} - {{A New Approach}} to {{Container Isolation}}},
   shorttitle = {Nabla Containers},
   abstract = {A new approach to Container Isolation},
   language = {en-us},
-  journal = {Nabla Containers},
   howpublished = {\url{https://nabla-containers.github.io/}},
   file = {/home/sll/Zotero/storage/ER59KCD5/nabla-containers.github.io.html}
 }
@@ -418,9 +422,10 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
   annote = {Name - IBM Research; Google Inc; Copyright - \textcopyright{} 2018 Global Data Point. All Rights Reserved. Provided by SyndiGate Media Inc. (Syndigate.info); Last updated - 2018-09-21}
 }
 
-@misc{ContainerRuntimeSandbox2019,
-  title = {Container {{Runtime Sandbox}}. {{Contribute}} to Google/Gvisor Development by Creating an Account on {{GitHub}}},
+@misc{GVisorContainerRuntime2019,
+  title = {{{gVisor}} - {{Container Runtime Sandbox}}.},
   copyright = {Apache-2.0},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/google/gvisor}},
   month = jan,
   year = {2019}
@@ -435,18 +440,23 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
   keywords = {Container,Cloud Computing,Computer Systems,Datorsystem,Docker,Electrical Engineering,Electronic Engineering,Elektroteknik Och Elektronik,Engineering And Technology,Information Engineering,Internet Of Service,Microservices,Monitoring,Performance Evaluation,Teknik Och Teknologier}
 }
 
-@article{tommasoImpactDockerContainers,
+@article{tommasoImpactDockerContainers2015,
   title = {The Impact of {{Docker}} Containers on the Performance of Genomic Pipelines},
+  volume = {3},
   abstract = {$<$p$>$Genomic pipelines consist of several pieces of third party software and, because of their experimental nature, frequent changes and updates are commonly necessary thus raising serious deployment and reproducibility issues. Docker containers are emerging as a possible solution for many of these problems, as they allow the packaging of pipelines in an isolated and self-contained manner. This makes it easy to distribute and execute pipelines in a portable manner across a wide range of computing platforms. Thus, the question that arises is to what extent the use of Docker containers might affect the performance of these pipelines. Here we address this question and conclude that Docker containers have only a minor impact on the performance of common genomic pipelines, which is negligible when the executed jobs are long in terms of computational time.$<$/p$>$},
-  journal = {PeerJ, 01 September 2015, Vol.3, p.e1273},
+  journal = {PeerJ},
   author = {Tommaso, Paolo Di and Palumbo, Emilio and Chatzou, Maria and Prieto, Pablo and Heuer, Michael L. and Notredame, Cedric},
-  keywords = {Docker,Bioinformatics,Medicine,Pipelines,Virtualisation,Workflow}
+  month = sep,
+  year = {2015},
+  keywords = {Docker,Bioinformatics,Medicine,Pipelines,Virtualisation,Workflow},
+  pages = {p.e1273}
 }
 
-@misc{OCIinterfacingContainerRuntime2019,
-  title = {{{OCI}}-Interfacing {{Container}} Runtime for {{Nabla Containers}} : Nabla-Containers/Runnc},
+@misc{OciInterfacingContainerRuntime2019,
+  title = {Oci-{{Interfacing Container Runtime}} for {{Nabla Containers}}: {{Nabla}}-{{Containers}}/{{Runnc}}},
   copyright = {ISC},
   shorttitle = {{{OCI}}-Interfacing {{Container}} Runtime for {{Nabla Containers}}},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/nabla-containers/runnc}},
   month = jan,
   year = {2019}
@@ -470,7 +480,7 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
   doi = {10.1109/TLA.2018.8528247},
   abstract = {Containers emerged as a new alternative to the virtual machines in large enterprise systems due to their virtualization mechanism that demands a low utilization level of the computational resources. Performance evaluation of Containers and virtual machines provides to practitioners and system administrators information about the quality of the services provisioned for virtualization. The main goal of this paper is to conduct a comparative study of the performance evaluation of virtual machines and containers. In order to accomplish this, a methodology is proposed to evaluate the performance of Docker containers and virtual machines. Additionally, a real-world case study is presented to illustrate the applicability of the proposed approach. For all the experiments, the Docker container shown lower execution times for the requests against virtual machine.},
   number = {8},
-  journal = {IEEE Latin America Transactions},
+  journal = {IEEE Latin America Transactions (IEEE LATAM)},
   author = {Yadav, R. R. and Sousa, E. T. G. and Callou, G. R. A.},
   month = aug,
   year = {2018},
@@ -522,7 +532,7 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 
 @inproceedings{xavierPerformanceComparisonContainerbased2014,
   title = {A Performance Comparison of Container-Based Virtualization Systems for Mapreduce Clusters},
-  booktitle = {Parallel, {{Distributed}} and {{Network}}-{{Based Processing}} ({{PDP}}), 2014 22nd {{Euromicro International Conference}} On},
+  booktitle = {Parallel, {{Distributed}} and {{Network}}-{{Based Processing}} ({{PDP}})},
   publisher = {{IEEE}},
   author = {Xavier, Miguel Gomes and Neves, Marcelo Veiga and De Rose, Cesar Augusto Fonticielha},
   year = {2014},
@@ -540,7 +550,7 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
   author = {Aguilera, X. Merino and Otero, C. and Ridley, M. and Elliott, D.},
   month = jul,
   year = {2018},
-  keywords = {auditing,availability,cloud computing,Cloud computing,cloud-based container resiliency,cloud-based images,common container vulnerabilities,container lifecycle,Containers,cyber survivability,cyber-attack,data integrity,enhanced containers,generic container model,Linux,Linux containers,managed containers,Mission critical systems,mission survivability,moving target defense,Resilience,resiliency strategy,resilient containerized mission critical systems,resilient framework,safety-critical software,secure state,Security,security of data,traditional defense mechanisms,uncompromisable security,Virtual machining,virtualization},
+  keywords = {Containers,Linux,Virtual machining,cloud computing,Cloud computing,virtualization,Linux containers,auditing,availability,cloud-based container resiliency,cloud-based images,common container vulnerabilities,container lifecycle,cyber survivability,cyber-attack,data integrity,enhanced containers,generic container model,managed containers,Mission critical systems,mission survivability,moving target defense,Resilience,resiliency strategy,resilient containerized mission critical systems,resilient framework,safety-critical software,secure state,Security,security of data,traditional defense mechanisms,uncompromisable security},
   pages = {946-949},
   file = {/home/sll/Zotero/storage/G9FSH2E5/Aguilera et al. - 2018 - Managed Containers A Framework for Resilient Cont.pdf;/home/sll/Zotero/storage/D9PXSIEC/8457910.html}
 }
@@ -561,7 +571,7 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 
 @inproceedings{reshetovaSecurityOSlevelVirtualization2014,
   title = {Security of {{OS}}-Level Virtualization Technologies},
-  booktitle = {Nordic {{Conference}} on {{Secure IT Systems}}},
+  booktitle = {Nordic {{Conference}} on {{Secure IT Systems}} ({{NordSec}})},
   publisher = {{Springer}},
   author = {Reshetova, Elena and Karhunen, Janne and Nyman, Thomas and Asokan, N.},
   year = {2014},
@@ -595,13 +605,14 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 }
 
 @misc{NamespacesArticleIndex,
-  title = {Namespaces Article Index [{{LWN}}.Net]},
+  title = {Namespaces {{Article Index}}},
+  journal = {LWN.net},
   howpublished = {\url{https://lwn.net/Articles/766124/}},
   file = {/home/sll/Zotero/storage/K2FSVLW9/766124.html}
 }
 
 @misc{Crio,
-  title = {Cri-O},
+  title = {{{CRI}}-{{O}}},
   howpublished = {\url{https://cri-o.io/}},
   file = {/home/sll/Zotero/storage/VTR34959/cri-o.io.html}
 }
@@ -615,7 +626,6 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 @misc{CloudNativeComputing,
   title = {Cloud {{Native Computing Foundation}}},
   language = {en-US},
-  journal = {Cloud Native Computing Foundation},
   howpublished = {\url{https://www.cncf.io/}},
   file = {/home/sll/Zotero/storage/KU9YGBEB/www.cncf.io.html}
 }
@@ -623,6 +633,7 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 @misc{OCIImageFormat2019,
   title = {{{OCI Image Format}}},
   copyright = {Apache-2.0},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/opencontainers/image-spec}},
   month = jan,
   year = {2019}
@@ -631,22 +642,25 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 @misc{OCIRuntimeSpecification2019,
   title = {{{OCI Runtime Specification}}},
   copyright = {Apache-2.0},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/opencontainers/runtime-spec}},
   month = jan,
   year = {2019}
 }
 
 @misc{ContainerNetworkInterface2019,
-  title = {Container {{Network Interface}}: Networking for {{Linux}} Containers},
+  title = {Container {{Network Interface}}: {{Networking}} for {{Linux Containers}}},
   copyright = {Apache-2.0},
   shorttitle = {Container {{Network Interface}}},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/containernetworking/cni}},
   month = jan,
   year = {2019}
 }
 
 @misc{DemystifyingContainerRuntimes,
-  title = {Demystifying Container Runtimes},
+  title = {Demystifying {{Container Runtimes}}},
+  journal = {LWN.net},
   howpublished = {\url{https://lwn.net/Articles/741897/}},
   file = {/home/sll/Zotero/storage/DM2MCIYW/741897.html}
 }
@@ -659,26 +673,29 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
   file = {/home/sll/Zotero/storage/48H7WJSU/cri-o-all-the-runtime-kubernetes-needs-and-nothing-more-mrunal-patel-red-hat.html}
 }
 
-@misc{HypervisorbasedContainerRuntime2019,
-  title = {The Hypervisor-Based Container Runtime for {{Kubernetes}}},
+@misc{FraktiHypervisorbasedContainer2019,
+  title = {Frakti - {{The Hypervisor}}-Based {{Container Runtime}} for {{Kubernetes}}},
   copyright = {Apache-2.0},
   shorttitle = {The Hypervisor-Based Container Runtime for {{Kubernetes}}.},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/kubernetes/frakti}},
   month = jan,
   year = {2019}
 }
 
 @misc{FirecrackercontainerdEnablesContainerd2019,
-  title = {Firecracker-Containerd Enables Containerd to Manage Containers as {{Firecracker microVMs}}},
+  title = {Firecracker-Containerd {{Enables}} Containerd to {{Manage Containers}} as {{Firecracker Microvms}}},
   copyright = {Apache-2.0},
   shorttitle = {Firecracker-Containerd Enables Containerd to Manage Containers as {{Firecracker microVMs}}},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/firecracker-microvm/firecracker-containerd}},
   month = jan,
   year = {2019}
 }
 
 @misc{KataContainersDocumentation2019,
-  title = {Kata {{Containers}} Documentation | {{Initial}} Release of {{Kata Containers}} with {{Firecracker}} Support},
+  title = {Kata {{Containers Documentation}} | {{Initial Release}} of {{Kata Containers}} with {{Firecracker Support}}},
+  journal = {GitHub},
   howpublished = {\url{https://github.com/kata-containers/documentation/wiki/Initial-release-of-Kata-Containers-with-Firecracker-support}},
   month = jan,
   year = {2019}
@@ -691,34 +708,36 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 }
 
 @misc{KataContainersWhy,
-  title = {Kata {{Containers}} - {{Why Kata Containers}} Doesn't Replace {{Kubernetes}}: {{A Kata Containers}} Explainer},
+  title = {Kata {{Containers}} - {{Why Kata Containers}} Doesn't Replace {{Kubernetes}}},
   howpublished = {\url{https://katacontainers.io/posts/why-kata-containers-doesnt-replace-kubernetes/}},
   file = {/home/sll/Zotero/storage/CPMHFACV/why-kata-containers-doesnt-replace-kubernetes.html}
 }
 
 @misc{MeasuringContainerSecurity,
-  title = {Measuring Container Security},
+  title = {Measuring {{Container Security}}},
+  journal = {LWN.net},
   howpublished = {\url{https://lwn.net/Articles/773976/}},
   file = {/home/sll/Zotero/storage/J5HEHBZC/773976.html}
 }
 
 @misc{UnderstandingNewControl,
-  title = {Understanding the New Control Groups {{API}}},
+  title = {Understanding the {{New Control Groups Api}}},
+  journal = {LWN.net},
   howpublished = {\url{https://lwn.net/Articles/679786/}},
   file = {/home/sll/Zotero/storage/T69CBX8V/679786.html}
 }
 
 @misc{ContainersUserSpace,
-  title = {Containers from User Space [{{LWN}}.Net]},
+  title = {Containers from {{User Space}}},
+  journal = {LWN.net},
   howpublished = {\url{https://lwn.net/Articles/745820/}},
   file = {/home/sll/Zotero/storage/UVF9X5SW/745820.html}
 }
 
 @misc{OpenSourceContainerbased,
-  title = {Open Source Container-Based Virtualization for {{Linux}}.},
+  title = {{{OpenVZ}} - {{Open Source Container}}-Based {{Virtualization}} for {{Linux}}.},
   abstract = {Multiple secure, isolated Linux containers (otherwise known as VEs or VPSs) on a single physical server enabling better server utilization and ensuring that applications do not conflict.},
   language = {en},
-  journal = {OpenVz},
   howpublished = {\url{https://openvz.org/}},
   file = {/home/sll/Zotero/storage/SWLR5SSH/openvz.org.html}
 }
@@ -744,7 +763,7 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 }
 
 @misc{BreakingOutChroot2016,
-  title = {Breaking out of a Chroot() Padded Cell},
+  title = {Breaking {{Out}} of a Chroot() {{Padded Cell}}},
   howpublished = {\url{https://web.archive.org/web/20160127150916/http://www.bpfh.net/simes/computing/chroot-break.html}},
   month = jan,
   year = {2016},
@@ -764,7 +783,8 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 }
 
 @misc{AnotherNewApproach2012,
-  title = {Yet Another New Approach to Seccomp [{{LWN}}.Net]},
+  title = {Yet {{Another New Approach}} to Seccomp},
+  journal = {LWN.net},
   howpublished = {\url{https://lwn.net/Articles/475043/}},
   month = jan,
   year = {2012},
@@ -772,7 +792,8 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 }
 
 @misc{SeccompOverview2015,
-  title = {A Seccomp Overview},
+  title = {A Seccomp {{Overview}}},
+  journal = {LWN.net},
   howpublished = {\url{https://lwn.net/Articles/656307/}},
   month = sep,
   year = {2015},
@@ -781,8 +802,67 @@ As part of Kubernetes 1.3, we're happy to report that our work to bring intercha
 
 @misc{Systemdnspawn,
   title = {Systemd-Nspawn},
+  journal = {Freedesktop.org},
   howpublished = {\url{https://www.freedesktop.org/software/systemd/man/systemd-nspawn.html}},
   file = {/home/sll/Zotero/storage/PRDS3RS4/systemd-nspawn.html}
+}
+
+@misc{DebianPackageManager,
+  title = {Debian {{Package Manager}}},
+  howpublished = {\url{https://wiki.debian.org/Teams/Dpkg}},
+  file = {/home/sll/Zotero/storage/5299577J/Dpkg.html}
+}
+
+@misc{RPMPackageManager,
+  title = {{{RPM Package Manager}}},
+  howpublished = {\url{https://rpm.org/}},
+  file = {/home/sll/Zotero/storage/77H8WJ2C/rpm.org.html}
+}
+
+@misc{UpdatesContainerIsolation,
+  title = {Updates in {{Container Isolation}}},
+  journal = {LWN.net},
+  howpublished = {\url{https://lwn.net/Articles/754433/}},
+  file = {/home/sll/Zotero/storage/K4U6W2AJ/754433.html}
+}
+
+@article{merkelDockerLightweightLinux2014,
+  title = {Docker: {{Lightweight Linux Containers}} for {{Consistent Development}} and {{Deployment}}},
+  volume = {2014},
+  issn = {1075-3583},
+  shorttitle = {Docker},
+  abstract = {Docker promises the ability to package applications and their dependencies into lightweight containers that move easily between different distros, start up quickly and are isolated from each other.},
+  number = {239},
+  journal = {Linux Journal},
+  note = {\url{http://dl.acm.org/citation.cfm?id=2600239.2600241}},
+  author = {Merkel, Dirk},
+  month = mar,
+  year = {2014}
+}
+
+@article{haleContainersPortableProductive2017,
+  title = {Containers for {{Portable}}, {{Productive}}, and {{Performant Scientific Computing}}},
+  volume = {19},
+  issn = {1521-9615},
+  doi = {10.1109/MCSE.2017.2421459},
+  abstract = {Containers are an emerging technology that holds promise for improving productivity and code portability in scientific computing. The authors examine Linux container technology for the distribution of a nontrivial scientific computing software stack and its execution on a spectrum of platforms from laptop computers through high-performance computing systems. For Python code run on large parallel computers, the runtime is reduced inside a container due to faster library imports. The software distribution approach and data that the authors present will help developers and users decide on whether container technology is appropriate for them. The article also provides guidance for vendors of HPC systems that rely on proprietary libraries for performance on what they can do to make containers work seamlessly and without performance penalty.},
+  number = {6},
+  journal = {Computing in Science Engineering (CiSE)},
+  author = {Hale, J. S. and Li, L. and Richardson, C. N. and Wells, G. N.},
+  month = nov,
+  year = {2017},
+  keywords = {code portability,Containers,high-performance computing systems,HPC systems,laptop computers,Libraries,Linux,Linux container technology,maintainability,nontrivial scientific computing software stack,Object recognition,parallel computers,parallel processing,performance measures,performant scientific computing,portability,portable scientific computing,productive scientific computing,proprietary libraries,Python code run,Runtime,scientific computing,Scientific computing,scientific information systems,Software,software distribution approach,software engineering,software libraries,software portability},
+  pages = {40-50},
+  file = {/home/sll/Zotero/storage/HSIJ62G4/Hale et al. - 2017 - Containers for Portable, Productive, and Performan.pdf;/home/sll/Zotero/storage/MJK2Z5PA/7933304.html}
+}
+
+@inproceedings{casalicchioMeasuringDockerPerformance2017,
+  title = {Measuring Docker Performance: {{What}} a Mess!!!},
+  booktitle = {International {{Conference}} on {{Performance Engineering Companion}} ({{ACM}}/{{SPEC}})},
+  author = {Casalicchio, Emiliano and Perciballi, Vanessa},
+  year = {2017},
+  pages = {11-16},
+  organization = {{ACM}}
 }
 
 

@@ -1,6 +1,8 @@
 ---
 documentclass: scrreprt
-title: Comparison of Operating System Level Virtualisation Frameworks on Linux
+classoption:
+- abstract=on
+title: Comparison of Operating-System-Level Virtualization Frameworks for Linux
 subtitle: Seminar Operating Systems and Software Engineering \
 
   360.037 \
@@ -8,130 +10,144 @@ subtitle: Seminar Operating Systems and Software Engineering \
   \
 
   TU Wien
-author: Stefan Lendl BsC\
+author: \
+
+  \
+  
+  \
+
+  Stefan Lendl \
+
+  \ 
+
+  under the supervision of \
 
   O.Univ.Prof. Dipl.-Ing. Dr.techn. Dr.h.c. Siegfried Selberherr \
 
   Univ.Ass. Dipl.-Ing. Dr.techn. Josef Weinbub, BSc
-date: February 2018
+<!-- date: April 2018 -->
 figureTitle: Figure #
 figPrefix: Figure
 tableTitle: Table #
 tblPrefix: Table
 toc: 1
 toc-depth: 2
+header-includes: |
+  \usepackage[none]{hyphenat}
 link-citations: 1
 csl: ieee-with-url.csl
 abstract: |
-  In the last decade Operating System Level Virtualisation or more commonly known as containers have become a very important technology for Cloud computing. Especially the flexibility and ease-of-use of containers lead to a rapid adoption in the industry. The recent standardization of containers within the industry allowed the development of further specialized solutions and the integration into powerful orchestration software which typically used VMs.
+  In the last decade operating-system-level virtualization or more commonly known as *containers* have become a very important technological component in various solutions like cloud computing. Especially the flexibility and ease-of-use of containers in cloud computing environment lead to a rapid adoption in this industry and promoted its enhancement. The recent standardization of containers within the industry allowed the development of further specialized solutions.
+  <!-- and the integration into powerful orchestration software which typically used VMs. -->
 
-  The leading containerization software Docker is just one of many available solutions. This paper presents and compares key characteristics of the most common container solutions on Linux: Docker, OpenVZ, LXC/LXD, rkt, runC and Kata Containers.
+  <!-- The leading containerization software Docker is just one of many available solutions. -->
+  This work presents and compares key characteristics of the most common container solutions for Linux: Docker, OpenVZ, LXC/LXD, rkt, runC and Kata Containers.
 ---
 
 # Introduction
 
-This section presents the various types of virtualization used for sharing physical resources; presents the open container standards; introduces the features of the Linux kernel which are used to implement Containers and references recent scientific work on this topic.
+<!-- This section presents the various types of virtualization used for sharing physical resources; presents the open container standards; introduces the features of the Linux kernel which are used to implement Containers and references recent scientific work on this topic. -->
 
-## Typse of Virtualisation
-
-Historically every service ran on its own physical server which lead to inefficient use of resources when the service did not utilize the full processing power of the server.
-In order to optimize the hardware utilization multiple services shall be operated on the same physical server, sharing the hardware resources.
+<!-- Historically every service ran on its own physical server which lead to inefficient use of resources when the service did not utilize the full processing power of the server. -->
+In order to optimize the hardware utilization multiple services operate on the same physical server, sharing the hardware resources.
 
 Several ways of sharing hardware resources are available which significantly differ in terms of isolation:
 
-- **Shared hosting** where services run alongside each other or even on the same web server.
+- **Shared hosting** where services run alongside each other or even on the same physical server.
 
 - **chroot** is an operating system (OS) kernel system call that changes the apparent root directory of a process to a subdirectory of the host. 
 
-- **Full system virtualisation** isolates the service by executing it inside its own virtual machine (VM) which fully emulates the entire hardware.
+- **Full system virtualization** isolates the service by executing it inside its own virtual machine (VM) which fully emulates the entire hardware.
 
-- **Operating System Level Virtualisation** or **Containers** are a set of OS kernel features to isolate individual processes.
+- **Operating-system-level virtualization** or **Containers** are a set of OS kernel features to isolate individual processes.
 
 - **Hybrid VM containers** is a new development of combining the benefits of isolation provided by VMs and the flexibility of containers.
 
-The first approach of shared hosting does not offer any significantly isolation between the processes and does not offer additional protection against security threats.
-Installing different versions of libraries is typically difficult. When Using the system call chroot to create a so called jail, the effected process can only access files within this subdirectory. This allows isolation between processes on filesystem level and effortless installation of different library versions on the same system. There are several ways to break out of such a jail [@BreakingOutChroot2016] and it is commonly no considered secure.
+The first approach of shared hosting does not offer any significant isolation between the processes and does not offer additional protection against security threats.
+<!-- TODO introduce security threads -->
+Installing different versions of applications or libraries in a host system is typically difficult because common package managers like DPKG [@DebianPackageManager] and RPM [@RPMPackageManager] do no allow the installation of multiple versions in the system.
 
-The development of full system virtualization revolutionized the hosting industry and allowed the evolution of Cloud computing. The execution in individual virtual machines offers the 
-maximum isolation between the processes. Inside the VM another full OS is running with all its system processes and services. VMs add a significant CPU and network performance overhead but because multiple instances can run on a single physical machine overall the resource is utilized more inefficiently. The hypervisor which manages the virtual machines can segment the hardware resources and apply resource quotas to the individual machines to adapt the share of resources to various needs.
+When Using the system call chroot to create a so called jail, the effected process can only access files within this subdirectory. This allows isolation between processes on filesystem level and effortless installation of different library versions on the same system. Several ways to break out of such a jail exist [@BreakingOutChroot2016] and it is therefore not considered secure.
+
+The development of full system virtualization revolutionized the hosting industry and allowed the evolution of cloud computing. The execution in individual virtual machines offers the 
+maximum isolation. Inside the VM another full OS is running with all its system processes and services. VMs add a significant CPU and network performance overhead but because multiple instances can run on a single physical machine the resource is utilized more efficiently. The hypervisor which manages the VMs can segment the hardware resources and apply resource quotas to the individual VM to adapt the share of resources.
 <!-- migration -->
 
-In the last decade OS-level virtualization or containers as described in [@waltersComparisonVirtualizationTechnologies2008] have become increasingly popular. The container accesses the same OS kernel as the host instead of emulating the hardware. The isolation is only done through the segmentation features of the kernel and containers have less performance overhead than VMs and much fast start up time.
-CITE?
+In the last decade OS-level virtualization or containers as described in [@waltersComparisonVirtualizationTechnologies2008] have become increasingly popular. The container accesses the same OS kernel as the host instead of emulating the hardware. The isolation is only done through the segmentation features of the kernel and containers have less performance overhead than VMs and near-native startup time [@haleContainersPortableProductive2017].
 
-One of the main reasons for containers is their lightweight design and simple deployment mechanisms through so orchestration software that manages containers on various physical locations. Due to the lightweight design quickly adding or removing containers or moving them from one location to another is a common operation in Cloud computing.
+OS-level virtualization imposes a small overhead compared to native execution and offers better or equal performance than virtual machines [@felterUpdatedPerformanceComparison2015]. For example the CPU overhead introduced by Docker was measured to be 5% to 10% whereas the I/O overhead ranges from 10% to 30%.
+
+One of the main reasons for containers is their lightweight design and simple deployment mechanisms through so-called orchestration software that manages multiple containers typically across multiple servers in multiple datacenters.
+Commonly services are started, stopped or moved from one server to another.
+The lightweight design of containers improves the performance of these operations.
 The OS kernel is considered a single-point-of failure and vulnerabilities in the kernel may allow malicious access from a container to the host or other containers [@linMeasurementStudyLinux2018].
-A former Docker developer claims that containers are safe with the appropriate settings [@ContainersUserSpace]. Although configuring these settings is difficult especially for general purpose.
 
-The recent development of what the Author calls hybrid VM containers combines virtual machines with containers by executing a container runtime in an extremely lightweight VM engine. Through complying to the open container standards these containers can be integrated into flexible container orchestration software like Kubernetes.
+Recent development of so-calls hybrid VM containers combines virtual machines with containers by executing a container runtime in an extremely lightweight VM engine. Through complying to the open container standards, these containers can be integrated into flexible container orchestration software like Kubernetes [@UpdatesContainerIsolation].
 
 ## Open Container Standardization
 
-In order to standardize the different implementations of containers several companies collaborate. The Open Container Initiative (OCI) [@OpenContainersInitiative] was formed under the Linux Foundation as an effort to define such standards. The Standardization is also activly driven by the Cloud Native Computing Foundation (CNCF) [@CloudNativeComputing]. These are the most important standards [@DemystifyingContainerRuntimes]:
+The Open Container Initiative (OCI) [@OpenContainersInitiative] -- formed under the Linux Foundation -- and the Cloud Native Computing Foundation (CNCF) [@CloudNativeComputing] define the following  [@DemystifyingContainerRuntimes]:
 
-- the Image Specification [@OCIImageFormat2019] which defines the content of container images
-- the Runtime Specification (CRI) [@OCIRuntimeSpecification2019] describes the "configuration, execution environment, and lifecycle of a container"
-- the Container Network Interface (CNI) [@ContainerNetworkInterface2019] specifies how to configure network interfaces inside containers, which was standardized by the CNCF.
+- Image Specification [@OCIImageFormat2019] defines the content of container images.
+- Runtime Specification (CRI) [@OCIRuntimeSpecification2019] describes the configuration, execution environment, and lifecycle of a container.
+- Container Network Interface (CNI) [@ContainerNetworkInterface2019] specifies how to configure network interfaces inside containers, which was standardized by the CNCF.
 
 ## Technical Background of Containers in Linux
 
 
 <!-- This section presents the mechanisms and concepts of isolation provided by the Linux kernel to implement containers. -->
 
-The main mechanisms to implement container isolation are namespaces and control groups (cgroups). For security purposes secure computation (seccomp), capabilities and mandatory access control (MAC) mechanisms of the kernel are used.
-These mechanisms have been implemented into the Linux kernel over the years strongly influenced by the growing container infrastructure.
+The main mechanisms to implement container isolation are *namespaces* and control groups (*cgroups*). For security purposes secure computation (*seccomp*), capabilities and mandatory access control (MAC) mechanisms of the kernel are used.
+These mechanisms have been implemented into the Linux kernel over the years and strongly influenced by the growing container infrastructure.
 
-namespaces as extensively described in [@NamespacesArticleIndex] defines what a process can see by creating a different view on the system. For example a process inside a container may have process ID (PID) 1 which is mapped to a different PID outside of the container. namespaces are for example also available for mount points, inter-process communication (IPC), network resources and users.
+Namespaces define what a process can see by creating a different view on the system [@NamespacesArticleIndex]. For example a process inside a container may see its process ID (PID) as 1 while it is mapped to a different PID outside of the container. Namespaces are for example also available for mount points, inter-process communication (IPC), network resources and users.
 
-cgroups [@UnderstandingNewControl] define which resources a process can use. With cgroups -- amongst other things -- the CPU or memory usage of a process can be limited. Other cgroups include device access,  network and I/O throughput.
+Cgroups define which resources a process can use [@UnderstandingNewControl]. With cgroups -- amongst other things -- the CPU or memory usage of a process can be limited. Other cgroups include device access,  network and I/O throughput.
 
-With seccomp [@SeccompOverview2015] a process can transition to a secure state where it can call only a limited subset of kernel system calls. The white-listing of system calls are done with filters that also consider the arguments of the system call.
+With seccomp a process can transition to a secure state where it can call only a limited subset of kernel system calls [@SeccompOverview2015]. The white-listing of system calls are done with filters that also consider the arguments of the system call.
 
-Mandatory access control (MAC) allows fine-grained permissions that are much more powerful than traditional permissions based on file permissions.
+MAC allows fine-grained control of permissions that are much more powerful than the traditional file-based permissions model.
 These rules are used with containers to additionally restrict the access of processes inside the container.
-There are various implementations for MAC and most commonly SELinux used AppArmor are used in conjunction with containers.
+There are various implementations for MAC and most commonly SELinux and AppArmor are used in conjunction with containers.
 
-# Recent Work
+<!-- # Recent Work -->
 
-According to researchers in [@felterUpdatedPerformanceComparison2015] OS-level virtualization imposes a small overhead compared to native execution and offers better or equal performance than virtual machines.
-The impact on CPU and memory performance is small while the I/O and network performance is degraded due to the more complex network stack.
-Researchers in [@casalicchioMeasuringDockerPerformance2017] measured the performance overhead introduced by Docker. With a CPU overhead was shown to be 5% to 10% and the I/O overhead ranges from 10% to 30%. 
+<!-- TODO: -->
+<!-- Researches in [@xiePerformanceComparisonNative2018] compared Docker and rkt in Kubernetes and showed that Docker has a better CPU performance and rkt a better disk write performance. -->
+<!-- Researchers in [@mavridisPerformanceOverheadStudy2017a] analyzed the impact of running Docker on top of KVM and showed a small overhead compared to execution directly in the VM. -->
+<!-- On ARM architecture virtual machine show a better performance for I/O tasks due to the caching mechanisms in the hypervisor [@rahoKVMXenDocker2015]. -->
 
-Researches in [@xiePerformanceComparisonNative2018] compared Docker and rkt in Kubernetes and showed that Docker has a better CPU performance and rkt a better disk write performance.
-Researchers in [@mavridisPerformanceOverheadStudy2017a] analyzed the impact of running Docker on top of KVM and showed a small overhead compared to execution directly in the VM.
-On ARM architecture virtual machine show a better performance for I/O tasks due to the caching mechanisms in the hypervisor [@rahoKVMXenDocker2015].
-
-Several approaches to increase the container security are proposed in [@aguileraManagedContainersFramework2018],[@manuDockerContainerSecurity2016],[@MeasuringContainerSecurity]. They all focus on additional security layers to enforce a stronger segmentation between containers and the host.
+<!-- Several approaches to increase the container security are proposed in [@aguileraManagedContainersFramework2018],[@manuDockerContainerSecurity2016],[@MeasuringContainerSecurity]. They all focus on additional security layers to enforce a stronger segmentation between containers and the host. -->
 
 # Container Frameworks
 
-This section presents various container frameworks for Linux in chronological order of release are all under active development. Other containerization solutions exist for Linux, FreeBSD, Solaris and Windows but these are not investigated in this paper.
+This section presents various container frameworks for Linux in chronological order of their release which are all under active development. Containerization exist for Linux, FreeBSD, Solaris and Windows.
 
 ## OpenVZ
 
-OpenVZ [@OpenSourceContainerbased] was one of the first container solutions on Linux. It was released 2005 as part of Virtuozzo [@HyperconvergedInfrastructureSoftware] and is still under development although mainly use inside Virtuozzo. The full feature set of OpenVZ is only available with a separate kernel. Many of its features were merged upstream in the Linux kernel significantly benefited the development of Linux container technology. 
+OpenVZ [@OpenSourceContainerbased] was one of the first container solutions on Linux. It was released 2005 as part of Virtuozzo [@HyperconvergedInfrastructureSoftware] and is still under development although mainly use inside Virtuozzo. The full feature set of OpenVZ is only available with a custom kernel. Many of its features were merged upstream in the Linux kernel which significantly benefited the development of Linux container technology. 
 
-OpenVZ containers are so-called system container in contrast to application containers of Docker and similar solutions. System containers are closer to a full VM with a full init process, starting other system processes. An application container like in Docker typically starts only the actual process without any background processes running inside the container.
+OpenVZ containers are so-called system containers, in contrast to application containers of Docker and similar solutions. System containers are closer to a full VM with a full init process, starting other system processes. An application container -- like in Docker -- typically starts only the actual process without any background processes running inside the container.
 
-OpenVZ has a feature called checkpointing with CRIU [@CRIU] which allows a container to stop during execution. This is a useful feature for live migration of containers and applications with slow startup time can be stored in the already started process. This is useful if an additional instance of an application has to be started up dynamically.
+OpenVZ has a feature called checkpointing with CRIU [@CRIU], which allows a container to stop during execution. This is a useful feature for live migration of containerized applications with slow startup time can be stored in the already started process. This is useful if an additional instance of an application has to be started up dynamically.
 
 ## LXC/LXD
 
-After the Linux mainline kernel added cgroups in the year 2007, LXC [@LinuxContainersLXC] was released in 2008 and the first implementation of container management on Linux without requiring any patches. It is mainly based around the already mentioned concepts of cgroups and namespaces.
+After the Linux mainline kernel added cgroups in the year 2007, LXC [@LinuxContainersLXC] was released in 2008 which was the first implementation of container management for Linux without requiring any patches. It is mainly based around the concepts of cgroups and namespaces.
 
-LXC offers stateful snapstops and live migration by using the same technology as OpenVZ's checkpointing.
+LXC offers stateful snapstots and live migration by using CRIU from the OpenVZ project.
 
 <!-- Offers long-term releases with 5 years of bug fixes -->
 
-The Linux Container Daemon (LXD) [@LinuxContainersLXD] adds a layer on top of LXC. It is developed by Canonical and first released in (October 2015). In contrast to Docker, the focus is not on containerising a single application but having a full operating system running inside.
+The Linux Container Daemon (LXD) [@LinuxContainersLXD] adds a layer on top of LXC. It is developed by Canonical and was first released in October 2015. In contrast to Docker, the focus is not on containerizing a single application but having a full OS running inside.
 
 LXD containers are system containers where the entry point for the container is not an application like in Docker but a full OS init system like systemd [@Systemd]. The focus of LXD is to have a full OS running inside. LXD aims to be used in a cloud environment as a replacement for VMs.
 
-To manage the containers it exposes a secure REST API to allow management to be done through --- for example --- cloud orchestration software like Canonical's own Juju [@JujucharmsJuju], OpenStack [@OpenStack] or Kubernetes [@Kubernetes]. LXD does not offer any network or storage management leaving that to the orchestration on top of it. On the other hand it offers life migration of containers to another host which is essential of dynamic load distribution in a cloud infrastructure.
+To manage the containers a secure application programming interface (API) to allow management to be done -- for example -- through cloud orchestration software like Canonical's own Juju [@JujucharmsJuju], OpenStack [@OpenStack] or Kubernetes [@Kubernetes]. LXD does not offer any network or storage management leaving that to the orchestration on top of it. On the other hand it offers life migration of containers to another host which is essential for dynamic load distribution in a cloud infrastructure.
 
 ## Docker
 
-With the release of Docker in 2013 the container mechanisms had its break-through and Docker is still the most popular container solution. One of the philosophies behind Docker's success was to hide complexity behind simplicity. This is especially true for the simplicity of the Command Line Interface (CLI) of Docker that significantly simplified initialisation and execution of previously complex task of container management.
+With the release of Docker [@merkelDockerLightweightLinux2014] in 2013 the container mechanisms had its break-through and Docker is still the most popular container solution. One of the philosophies behind Docker's success was to hide complexity behind simplicity. This is especially true for the simplicity of the Command Line Interface (CLI) of Docker that significantly simplified initialisation and execution of the previously complex container management tasks.
 
 Docker is not a standalone container runtime but consists of many software components with different purpose. Many of these components have been extracted in order to collaborate with other projects and support further development.
 
@@ -139,129 +155,132 @@ Docker uses a central daemon that handles the various running containerized proc
 
 <!-- ![Docker Execution Driver [@DockerIntroducingExecution2014]](images/docker-execdriver-diagram.png){#fig:docker-exec-driver width=80%} -->
 
-Initially Docker used LXC as its container runtime and later developed its own runtime libcontainer which was later extracted and donated to the Open Container Initiative (OCI) and is now known as runC [@RunCCLITool2019]. 
+Initially Docker used LXC as its container runtime and later developed its own runtime (libcontainer) which was later extracted as runC.
 
 Docker had frequent API changes which was difficult to integrate in other systems which favor a stable API. This lead to the development of containerd as a standalone daemon with stable API which was donated as well to the OCI.
-Later Docker engine also used containerd as shown in @Fig:docker-engine-arch. containerd uses runC to execute the container.
+Later, Docker engine also used containerd, which uses runC as shown in @Fig:docker-engine-arch.
 
-![The Docker Engine architecture [@Docker11First2016]](images/docker-engine-arch.png){#fig:docker-engine-arch width=90%}
+![The Docker Engine architecture [@Docker11First2016].](images/docker-engine-arch.png){#fig:docker-engine-arch width=90%}
 
-The docker architecture is designed around the concept that a single container only runs a single process. For example a container runs the web server, another container runs the database and yet another container runs a caching proxy in front of the service. This type of container is called an application container. Many of these application containers images are available as ready-to-use images that can be downloaded from a registry. Once the images is started it is referred to as a container.
+The Docker architecture is designed around the concept that a single container only runs a single process. For example, a container runs the web server, another container runs the database and yet another container runs a caching proxy in front of the service. Many of these application containers *images* are available as ready-to-use images that can be downloaded from a *registry*. Once the images is started it is referred to as a container.
 
-Docker containers and images use a layered approach where each layer contains a change set to the layer underneath [@StorageDrivers2019]. As shown in @Fig:container-layers an image consists of various read-only layers and the execution of current container is done in an additional read-write layer on top of the image layers. With this layered concept if an image is executed multiple concurrent or sequential times the images layers are only stored on the system once. The same is true for image sub-layers where for example multiple layers can inherit a base layer provided by Ubuntu.
+Docker containers and images use a layered approach where each layer only contains the difference to the layer underneath [@StorageDrivers2019]. As shown in @Fig:container-layers, an image consists of various read-only layers and the execution of the current container is done in an additional read-write layer on top of the image layers. With this layered concept an image can  be executed multiple concurrent or sequential times and the image layers are only stored on the system once. The same is true for image sub-layers where multiple layers can inherit the same a base layer.
 
-![Docker Container Layers](images/container-layers.jpg){#fig:container-layers width=80%}
+![Docker Container Layers.](images/container-layers.jpg){#fig:container-layers width=80%}
 
-In Docker the life-time of a container matches the life-time of the process that is executed inside. If the process terminates, the container terminates with it. If a Docker container is deleted all changes made inside the container are deleted as well. In order to store the changes in a container a snapshot of the current state can be taken a stored as a new image that can again be started up at that state. Furthermore, directories from outside the container can be mapped inside the container to store consistent changes outside the container.
+In Docker the life-time of a container matches the life-time of the process that is executed inside. If the process terminates, the container terminates with it. If a Docker container is deleted all changes made inside the container are deleted as well. In order to store the changes in a container a snapshot of the current state can be taken a stored as a new image with a new layer that can again be started up. Furthermore, consistent changes like the content of a database can be mounted from outside the container without modifying the data-independent image.
 
-Docker images can be built using a Dockerfile that starts off at a specified image and specifies instructions to be executed inside the container before the resulting image is saved. With this method images can be produced automatically at for example a new release of the application packaged inside the Docker image.
+Docker images can be built using a Dockerfile that starts off at a specified image and specifies instructions to be executed inside the container before the resulting image is saved. With this method images can be produced automatically at -- for example -- a new release of the application packaged inside the Docker image.
 
-Docker supports multiple network drivers [@DockerNetworkingDocumentation2019] which allow networking interfaces to act as *bridge* where the virtual docker network is separated from the host network; *host* where the container has direct access to the hosts network interface; *overlay* where a virtual network is created between multiple hosts that run the Docker daemon; *macvlan* where each container gets a unique mac address on the host's network and Docker even allows third-party networking plugins to be used.
+Docker supports multiple network drivers [@DockerNetworkingDocumentation2019] which allow networking interfaces to act as a *bridge*, where the virtual Docker network is separated from the host network; *host*, where the container has direct access to the hosts network interface; *overlay*, where a virtual network is created between multiple hosts that run the Docker daemon and *macvlan*, where each container gets a unique address on the host's network. Docker also allows third-party networking plugins to be used.
 
 <!-- Docker is available in also available in OpenStack, CloudFoundry and  -->
 <!-- Docker and later containerd was the underlying container runtime for Kubernetes.  -->
 
-## runC
+## runC {#sec:runc}
 
-runC [@RunCCLITool2019] is a lightweight container runtime without a daemon which originated as a software component of Docker and is now developed by the OCI. It gives the user full control over the execution of the container which allowed the development of other solutions on top of containers that use runC as their container runtime.
+RunC [@RunCCLITool2019] is a lightweight container runtime without a daemon, which originated as a software component of Docker and is now developed by the OCI. It gives the user full control over the execution of the container, which allowed the development of other solutions on top of containers that use runC as their container runtime.
 
-An example of software on top of runC is CRI-O [@Crio] which is a lightweight and simple container runtime developed by Red Hat as a minimal container runtime for Kubernetes which was released in October 2017. "CRI-O is designed to be simpler than other solutions, following the Unix philosophy of doing one thing and doing it well, with reusable components." [@KubeConCloudNativeConNorth]. The goal for CRI-O is to have maximum compatibility with Kubernetes and provide a stable interface.
+An example of software on top of runC is CRI-O [@Crio] -- released in October 2017 -- which is a lightweight and simple container runtime developed by Red Hat as a minimal container runtime for Kubernetes.
+CRI-O is designed to be simple by following the Unix philosophy of doing one thing and doing it well <!-- with reusable components. -->
+[@KubeConCloudNativeConNorth]. The goal for CRI-O is to have maximum compatibility with Kubernetes and provide a stable interface.
 
-Another example is Garden [@GardenCloudFoundry], which is the containerization layer in the CloudFoundry orchestration software [@CloudFoundryOpen]. The Garden project moved from LXC to runC as their container back-end on Linux.
+Another example is Garden [@GardenCloudFoundry], which is the containerization layer in the CloudFoundry orchestration software [@CloudFoundryOpen]. Garden started by using LXC and later moved to runC as their container runtime.
 
 ## rkt
 
-rkt [@CoreOSRkt] (pronounced "rocket") is an open-source container engine developed by CoreOS project. rkt took security into consideration from the early design. rkt offers encryption and signing of images [@CoreOSRktImage]. In addition to rkt's native image format it can execute Docker images. 
+Rkt [@CoreOSRkt] (pronounced "rocket") is an open-source container engine developed by CoreOS project. Rkt offers encryption and signing of images [@CoreOSRktImage]. In addition to rkt's native image format it can execute Docker images. 
 
-Same as Docker rkt focuses on application containers where the ideally only a single process is executed inside a container.
-rkt does not have a centralized daemon for configuration but integrates in systemd to start containers directly under the Linux init process.
+Rkt focuses on application containers, where ideally only a single process is executed inside a container.
+Rkt does not have a centralized daemon for configuration and systemd is used to start containers directly from the Linux init process.
 This eliminates the single point-of-failure of having a centralized daemon like Docker. @Fig:rkt-exec-hierarchy shows the execution hierarchy of rkt compared to Docker.
 
-![Execution hierarchy Docker vs. rkt [@xie2017performance]](images/docker_rkt_exec_structure.gif){#fig:rkt-exec-hierarchy width=60%}
+![Execution hierarchy in Docker and rkt [@xie2017performance].](images/docker_rkt_exec_structure.gif){#fig:rkt-exec-hierarchy width=60%}
 
-rkt developed and uses the App Container standard appC [@AppContainerSpecification2019] which was later included in the OCI standards.
-The project compares in [@AppContainerSpecification2019README] the appC standards to the OCI standard as follows: 
-"*The App Container Image format (ACI) is maps more or less directly to the OCI Image Format Specification, with the exception of signing and dependencies.
-The App Container Executor (ACE) specification is related conceptually to the OCI Runtime Specification, with the notable distinctions that the latter does not support pods and generally operates at a lower level of specification.
-App Container Image Discovery does not yet have an equivalent specification in the OCI project.*"
+Rkt project uses the App Container standard (appC) [@AppContainerSpecification2019] which was later included in the OCI standards. The appC standard is similar to the OCI standards with a few differences [@AppContainerSpecification2019README].
+<!-- The project compares in  the appC standards to the OCI standard as follows:  -->
+<!-- "*The App Container Image format (ACI) is maps more or less directly to the OCI Image Format Specification, with the exception of signing and dependencies. -->
+<!-- The App Container Executor (ACE) specification is related conceptually to the OCI Runtime Specification, with the notable distinctions that the latter does not support pods and generally operates at a lower level of specification. -->
+<!-- App Container Image Discovery does not yet have an equivalent specification in the OCI project.*" -->
 
-appC uses the concept of pods as the basic unit of execution. "*A pod is a grouping of one or more app images (ACIs), with some additional metadata optionally applied to the pod as a whole.*"[@CoreOSRktApp] This allows configuration of --- for example --- resource constraints and networking for multiple containers from a single point. The concept of pods in rkt is identical to the concept of pods in Kubernetes [@WhatKubernetesUsers] 
-which allows a good integration and rkt became the first non-Docker runtime to be supported in Kubernetes [@RktnetesBringsRkt].
+AppC uses a so-called *pod* as the basic unit of execution. A pod is a group of one or more services that is logically related [@CoreOSRktApp]. 
+<!-- the basic unit of execution. "*A pod is a grouping of one or more app images (ACIs), with some additional metadata optionally applied to the pod as a whole.*"[@CoreOSRktApp] This allows configuration of --- for example --- resource constraints and networking for multiple containers from a single point. -->
+The concept of pods in rkt is identical to the concept of pods in Kubernetes [@WhatKubernetesUsers], which allows good integration. Rkt became the first non-Docker runtime to be supported by Kubernetes [@RktnetesBringsRkt].
 
-![rkt execution workflow [@CoreOSRktArchitecture]](images/rkt-execution-flow.png){#fig:rkt-exec-flow width=50%}
+![Rkt execution workflow [@CoreOSRktArchitecture].](images/rkt-execution-flow.png){#fig:rkt-exec-flow width=50%}
 
-The rkt execution workflow as shown in @Fig:rkt-exec-flow describes three stages. After the pod is started from various sources like the command line, systemd or Kubernetes the container runtime is set up in stage 1. Different execution environments are available in rkt. The default options are:
+The rkt execution workflow as shown in @Fig:rkt-exec-flow describes three stages. After the pod is started from various sources: the command line, systemd or Kubernetes. The container runtime is set up in stage 1. Different execution environments are available in rkt. The default options are:
 
-- **systemd-nspawnd** the default behavior that uses the cgroups and namespaces invoked from systemd.
-- **fly** executes the process in a chroot without further isolation
-- **KVM** uses a fully virtualized environment
+- **systemd-nspawnd** uses the cgroups and namespaces invoked from systemd.
+- **fly** executes the process in a chroot without further isolation.
+- **KVM** uses a fully virtualized environment.
 
-Other options for stage 1 are available as plugins. In stage 2 the process inside the container is launched.
+Other options for stage 1 are available as plugins. In stage 2, the process inside the container is launched.
 
-rkt is currently changing its internal architecture to be compliant to the OCI standard
-[@WhatKubernetesUsers] and is currently developing the integration of runC as a stage 2 execution environment. The current status rkt's OCI transition can be seen at [@CoreOSRktOCI2019].
+Rkt is currently changing its internal architecture to be compliant to the OCI standard
+[@WhatKubernetesUsers] and is currently developing the integration of runC as a stage 2 execution environment. [@CoreOSRktOCI2019] describes the current status rkt's OCI transition.
 
 To build rkt images scripts are available that are similar to Dockerfiles.
 
-rkt uses systemd-journald for logging which integrates directly in the logging infrastructure of the host system.
+Rkt uses systemd-journald for logging which integrates directly with the logging infrastructure of the host system.
 
-Although, rkt may arguably have a better architecture than other solutions it seems that developers have stopped actively developing rkt when CoreOS was bought by Red Hat in Spring 2018. There is no official announcement but the last GitHub commit on rkt was in May 2018.
+Although, rkt may arguably have a better architecture than other solutions, it seems that developers have stopped actively developing rkt when CoreOS was bought by Red Hat in Spring 2018. There is no official announcement but the last GitHub commit on rkt was in May 2018.
 
 ## Kata Containers
 
-Kata containers [@KataContainersSpeed] is an OCI-compliant hybrid VM container runtime that executes containers within virtual machines released in 2018.
+Kata containers [@KataContainersSpeed] -- released in 2018 -- is an OCI-compliant hybrid VM container runtime that executes containers within a VM.
 
-Kata Container originated from merging of the two projects Hyper runV [@HyperMakeVM] and Intel Clear Containers [@IntelClearContainers2019] which focused on securing the runtime environment that containers execute in by executing the container inside a Kernel Virtual Machine (KVM) runtime [@IntelHyperSh2017].
+Kata Container originated from merging of the two projects Hyper runV [@HyperMakeVM] and Intel Clear Containers [@IntelClearContainers2019], which focused on securing the runtime environment by executing the container inside the Kernel Virtual Machine (KVM) runtime [@IntelHyperSh2017].
 
-Kata containers is developed under the OpenStack foundation and provide a virtualized isolation layer to make container execution more secure [@OpenStackBoostsContainer2018]. The project is supported by several companies to accelerate development and hardware support.
+Kata containers is developed under the OpenStack foundation and provides a virtualized isolation layer to make container execution more secure [@OpenStackBoostsContainer2018]. The project is supported by several companies to accelerate development and hardware support.
 
-Kata Containers can be integrated into Docker and containerd and into Kubernetes with Kata containers OCI-compatable runtime or directly into the CRI layer with Frakti [@HypervisorbasedContainerRuntime2019]. @Fig:kata-kubernets shows the different integration options of Kata containers into Kubernetes.[^kata-kub] @Fig:cri-o-kata shows how Kata containers can be executed in Kubernetes under CRI-O alongside other OCI compliant containers.
+Kata Container integrates into Docker's containerd with their OCI-compatable runtime and it can be used with Kubernetes in different ways. Either through containerd, CRI-O or directly through the CRI layer with Frakti [@FraktiHypervisorbasedContainer2019]. @Fig:kata-kubernets shows the different integration options of Kata containers into Kubernetes.[^kata-kub] @Fig:cri-o-kata shows how Kata containers can be executed in Kubernetes under CRI-O alongside other OCI compliant containers.
 
-![Kata Container intergration into Kubernets [@KataContainersWhy]](images/kubernetesandkatacontainers.jpg){#fig:kata-kubernets width=90%}
+![Kata Container intergration into Kubernets [@KataContainersWhy].](images/kubernetesandkatacontainers.jpg){#fig:kata-kubernets width=90%}
 
-[^kata-kub]: This is a good representation of the current development trend towards open standardization compliance on all layers.
+[^kata-kub]: This shows the current development trend towards open standardization compliance on all layers.
 
-![Kata Container intergration into Kubernets with CRI-O [@KataContainersWhy]](images/cri-o-kata.jpg){#fig:cri-o-kata width=80%}
+![Kata Container intergration into Kubernets with CRI-O [@KataContainersWhy].](images/cri-o-kata.jpg){#fig:cri-o-kata width=80%}
 
-Kata Containers uses a minimal version of QEMU for virtualization. For faster start-up time of the VM container other virtualization engines have been added. Noticeably, Firecracker MicroVM [@FirecrackerMicroVM] is available with Kata Containers as of version 1.5^[released Jan 22. 2019]
+Kata Containers uses a minimal version of QEMU for virtualization. For faster startup time of the VM container other virtualization engines have been added. Noticeably, Firecracker MicroVM [@FirecrackerMicroVM] is available with Kata Containers as of version 1.5^[released Jan 22, 2019]
 [@KataContainersDocumentation2019]. 
 Firecracker MicroVM is a minimalistic virtual machine developed by Amazon as a faster replacement for QEMU. Firecracker only emulates 4 devices for networking, block devices, serial console and a 1-button keyboard controller used only to stop the microVM. This minimalistic design enables a startup time of less than 125ms.
 
 ## Other Frameworks
 
-There are many other solutions available and the following few are mentioned only for reference and an interested reader might continue there.
+There are many other solutions available and the following few are mentioned only for reference.
 
-- systemd-nspawnd [@Systemdnspawn] is part of systemd and allows the creation of a container directly from systemd
+- systemd-nspawnd [@Systemdnspawn] is part of systemd and can manage containers directly from systemd.
 
-- gVisor [@ContainerRuntimeSandbox2019] is an attempt to secure containers by providing a user space kernel abstraction that processes the system calls used by the container process.
+- gVisor [@GVisorContainerRuntime2019] attempts to secure containers by providing a user space kernel abstraction which processes the system calls used by the container process.
 
 - Nabla containers [@NablaContainersNew] tries to secure containers by restricting the kernel system calls with a strict seccomp profile that allows only 7 system calls.
 
-- Singularity [@Singularity] is a container framework intended for scientific computing where operations are executed on many notes in a high performance cluster.
+- Singularity [@Singularity] is a container framework intended for scientific computing where operations are executed on many servers in a high performance cluster.
 
 # Comparison
 
 This section compares various characteristics of the previously introduced container frameworks and the availability of their frameworks in different orchestrator solutions.
 
-Framework       |     Release | Isolation | Sys/App container | central daemon | live migration | resource quotas | OCI compliant
+Frame- work       |     Release | Isolation | Sys/App container | Central daemon | Live migration | Resource quotas | OCI compliant
 --              |          -- | --        |                -- | --             |             -- | --              |            --
 OpenVZ          |        2005 | Kernel    |            System | no             |            yes | yes             |            no
 LXC             |        2008 | Kernel    |            System | no             |            yes | yes             |            no
-LXD             |        2016 | Kernel    |            System | yes            |            yes | yes             |            no
 Docker          |        2014 | Kernel    |               App | yes            |            yes | yes             |           yes
+LXD             |        2016 | Kernel    |            System | yes            |            yes | yes             |            no
 runC            | 2016[^runC] | Kernel    |               App | no             |            yes | yes             |           yes
 rkt             |        2016 | Kernel    |               App | no             |             no | yes             |       partial
-Kata Containers |        2018 | VM        |               App | no             |            yes | yes             |           yes
+Kata Containers |        2018 | VM        |               App | no             |            no | yes             |           yes
 
 
-: Comparison of Container framework characteristics {#tbl:comp_char}
+: Comparison of container framework characteristics. {#tbl:comp_char}
 
 [^runC]: Stable version 1.0 has not yet been released.
 
-@Tbl:comp_char illustrates some characteristics of the presented container frameworks. It shows the release year of the framework and the underlying isolation strategy of the framework where traditional container frameworks offer isolation through Linux Kernel mechanisms and Kata Containers offers isolation through full system virtualization. Some containers are designed as system containers while other -- newer frameworks, starting with Docker -- are application containers. The only two container frameworks with a centralized daemon are Docker and LXD, whereas LXD is essentially the daemon for LXC.
-All framework but rkt support live migration while the container solutions use CRIU and Kata containers the snapshotting feature of the underlying virtualization engine.
-All container frameworks all the specification of CPU, network, I/O and memory quotas and are therefore not listed separately.
-Not all frameworks are OCI compliant because OCI standardization focuses on application containers. Docker which uses runC internally is OCI compliant. rkt does not fully comply to the OCI standard and Kata containers was developed after the standardization and is one of the first container frameworks that focus on OCI compliance from the start.
+@Tbl:comp_char presents some characteristics of the presented container frameworks. It shows the release year of the framework and the underlying isolation strategy. Traditional container frameworks offer isolation through Linux Kernel mechanisms and Kata Containers offers isolation through full system virtualization. Some containers are designed as system containers while other -- newer frameworks, starting with Docker -- are application containers. The only two container frameworks with a centralized daemon are Docker and LXD, whereas LXD is essentially a daemon for LXC.
+All frameworks but rkt support live migration while the container solutions use CRIU. Kata containers does not yet support a snapshotting feature.
+All container frameworks allow the specification of CPU, network, I/O and memory quotas and are therefore not listed separately.
+Not all frameworks are OCI compliant because OCI standardization focuses on application containers. Docker -- which uses runC internally -- is OCI compliant. Rkt does not fully comply to the OCI standard and Kata containers was developed after the standardization and is one of the first container frameworks that focuses on OCI compliance from the start.
 
 Orchestrator→ Container ↓ | Kubernetes | OpenStack | CloudFoundry | Mesos[^mesos] | Virtuozzo
 --                        |         -- | --        |           -- | --            |        --
@@ -273,24 +292,27 @@ rkt                       |        yes | yes       |           no | no          
 Kata                      |        yes | yes       |           no | no            |        no
 
 
-: Availability of Container Framework in various Orchestrators {#tbl:comp_orchestrator}
+: Availability of container framework in various orchestrators. {#tbl:comp_orchestrator}
 
-[^mesos]: Also has its own containerization engine.
-[^vtz]: On top of Virtuozzo
-[^ovz]: Inside OpenVZ containers
+[^mesos]: Mesos has its own containerization engine.
+[^vtz]: On top of Virtuozzo.
+[^ovz]: Inside OpenVZ containers.
 
-An interesting distinction between container frameworks is their integration into orchestration software on top of the container. OpenVZ was developed inside Virtuozzo with a separate Linux kernel and some of its features are not available upstream. It is therefore only available in Virtuozzo. On top of Virtuozzo it is possible to deploy Kubernetes and OpenStack and it is possible to run Docker inside OpenVZ which makes it available in Virtuozzo.
+An interesting distinction between container frameworks is their integration into orchestration software. OpenVZ was developed inside Virtuozzo with a separate Linux kernel and some of its features are not available upstream. It is therefore only available in Virtuozzo. On top of Virtuozzo it is possible to deploy Kubernetes and OpenStack and it is possible to run Docker inside OpenVZ which makes it available in Virtuozzo.
 All other frameworks are directly or with shim layers available in Kubernetes and OpenStack. CloudFoundy supports Docker and integrated runC into there containerization engine. Apache Mesos [@ApacheMesos] offers support for Docker alongside their own containerization implementation.
 
 # Conclusion
 
 Docker made containers popular by significantly simplifying container management through their easy-to-use CLI and API and large selection of readily available images.
-Docker's central daemon containerd is build modular to facility integration into orchestrator software and allows the underlaying execution runtime to be replaces with another runtime. For example Kata containers even with Firecracker MicroVM can directly be used with the same Docker API.
+Docker's central daemon -- containerd -- is build modular to facility integration into orchestrator software and allows the underlaying execution runtime to be replaced with another runtime. For example Kata containers -- even with Firecracker MicroVM -- can directly be used with the same Docker API.
 
-Through the standardization the industry has agreed on a single set of standards which was mainly pushed by Docker and the standardized standalone runtime runC is directly integrated into other solutions that need to have full low-level control of the container.
+Through the standardization, the industry has agreed on a single set of standards which was mainly pushed by Docker. The standardized stand-alone runtime runC is directly integrated into other solutions that need to have full low-level control of the container.
 
-This makes Docker for simple use the best choice when directly interacting with the containers and runC the best options when containers need to be integrated into other solutions with which the user interacts with.
+This makes Docker the best choice for simple use when directly interacting with the container runtime through the API. RunC is the best options when control over the runtime need to be fully integrated into other solutions.
 
-Most container in the Cloud are executed inside a VM due to security concerns of the operators. This fact and its strong focus on integrability makes Kata Containers -- which is currently still under heavy development -- a very promising alternative to eliminating this layer of virtualization.
+Due to security concerns, most container runtimes in the cloud are executed inside a VM which eliminates the performance advantage of containers over VMs.
+<!-- This fact and its strong focus on integrability makes  -->
+Kata Containers is very promising to optimize this be controlling the virtualization layer and directly integrating into the hypervisor. By focusing on integrability into other solutions it allows a fast adoption of the technology.
+<!-- -- which is currently still under heavy development --  -->
 
 # References {-}
