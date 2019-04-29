@@ -39,7 +39,7 @@ header-includes: |
 link-citations: 1
 csl: ieee-with-url.csl
 abstract: |
-  In the last decade operating-system-level virtualization or more commonly known as *containers* have become a very important technological component in various solutions like cloud computing. Especially the flexibility and ease-of-use of containers in cloud computing environment, lead to a rapid adoption in this industry and promoted its enhancement. The recent standardization of containers within the industry allowed the development of further specialized solutions.
+  In the last decade operating-system-level virtualization or more commonly known as *containers* have become a very important technological component in various solutions like cloud computing. Especially the flexibility and ease-of-use of containers in cloud computing environments lead to a rapid adoption in this industry and promoted its enhancement. The recent standardization of containers within the industry allowed the development of further specialized solutions.
   <!-- and the integration into powerful orchestration software which typically used VMs. -->
 
   <!-- The leading containerization software Docker is just one of many available solutions. -->
@@ -299,7 +299,9 @@ Kata                      |        yes | yes       |           no | no          
 [^ovz]: Inside OpenVZ containers.
 
 An interesting distinction between container frameworks is their integration into orchestration software. OpenVZ was developed inside Virtuozzo with a separate Linux kernel and some of its features are not available upstream. It is therefore only available in Virtuozzo. On top of Virtuozzo it is possible to deploy Kubernetes and OpenStack and it is possible to run Docker inside OpenVZ which makes it available in Virtuozzo.
-All other frameworks are directly or with shim layers available in Kubernetes and OpenStack. CloudFoundy supports Docker and integrated runC into there containerization engine. Apache Mesos\ [@ApacheMesos] offers support for Docker alongside their own containerization implementation.
+All other frameworks are directly or through a shim[^shim] layers available in Kubernetes and OpenStack. CloudFoundy supports Docker and integrated runC into there containerization engine. Apache Mesos\ [@ApacheMesos] offers support for Docker alongside their own containerization implementation.
+
+[^shim]: A shim is *"a small piece of software that is added to an existing system program or protocol in order to provide some enhancement."* [@Freedman:1996:CDE:525393]
 
 # Conclusion
 
