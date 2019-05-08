@@ -5,6 +5,12 @@ lang: en
 
 # Introduction
 
+## Structure
+
+- Technical background
+- Container Frameworks
+- Comparison
+
 ## Types of Isolation
 
 - Shared hosting
@@ -58,10 +64,10 @@ OCI under Linux Foundation - and  Cloud Native Computing Foundation (CNCF)
 
 ## OpenVZ
 
-- first containers on Linux
-- custom Linux kernel
-- system container
-- checkpointing
+- First containers on Linux
+- Custom Linux kernel
+- System container
+- Checkpointing
 
 ::: notes
 2005 - Virtuozzo -
@@ -78,9 +84,9 @@ checkpointing with **CRIU** > stop during execution. **live migration**
 
 ## LXC/LXD
 
-- mainline kernel
-- system container
-- centralized daemon LXD
+- Mainline kernel
+- System container
+- Centralized daemon LXD
 - API to integrate into orchestration
 
 ::: notes
@@ -100,12 +106,12 @@ focus on the API for better integration \
 
 ## Docker
 
-- easy-to-use interface
-- centralized daemon
-- application container
-- stateless data-independent images
-- image registry
-- build instructions (Dockerfile)
+- Easy-to-use interface
+- Centralized daemon
+- Application container
+- Stateless data-independent images
+- Image registry
+- Build instructions (Dockerfile)
 
 
 ::: notes
@@ -170,9 +176,9 @@ development of **containerd** as a standalone daemon with **stable API** donated
 
 ## runC {#sec:runc}
 
-- lightweight
-- no centralized daemon
-- part of the OCI
+- Lightweight
+- No centralized daemon
+- Part of the OCI
 
 ::: notes 
 
@@ -190,11 +196,11 @@ CRI-O: Unix philosophy of *doing one thing and doing it well*.
 
 ## rkt
 
-- application container
-- encryption and signing of images
-- no centralized daemon
-- integrated into systemd
-- different execution drivers
+- Application container
+- Encryption and signing of images
+- No centralized daemon
+- Integrated into systemd
+- Different execution drivers
 
 ::: notes
 
@@ -208,7 +214,7 @@ logging is also done through systemd's **journal**.
 
 Standardization > uses a slightly different - App Container standard (**appC**)
 
->> ***NEXT SLIDE***
+>> **NEXT SLIDE**
 
 - **systemd-nspawnd** uses the cgroups and namespaces invoked from systemd.
 - **fly** executes the process in a chroot without further isolation.
@@ -243,10 +249,10 @@ GO BACK
 
 ## Kata Containers
 
-- hybrid VM containers
-- execution inside QEMU/KVM
-- compliance with OCI standards
-- integration into Docker and Kubernetes
+- Hybrid VM containers
+- Execution inside QEMU/KVM
+- Compliance with OCI standards
+- Integration into Docker and Kubernetes
 
 ::: notes
 
@@ -361,7 +367,6 @@ Apache Mesos offers support for Docker alongside their own containerization impl
 
 <!-- An interesting distinction between container frameworks is their integration into orchestration software. OpenVZ was developed inside Virtuozzo with a separate Linux kernel and some of its features are not available upstream. It is therefore only available in Virtuozzo. On top of Virtuozzo it is possible to deploy Kubernetes and OpenStack and it is possible to run Docker inside OpenVZ which makes it available in Virtuozzo. -->
 
-# Conclusion
 
 ## Conclusion
 

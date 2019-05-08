@@ -36,7 +36,14 @@
   <h1 class="title">Container Frameworks for Linux</h1>
 </section>
 
-<section><section id="introduction" class="title-slide slide level1"><h1>Introduction</h1></section><section id="types-of-isolation" class="slide level2">
+<section><section id="introduction" class="title-slide slide level1"><h1>Introduction</h1></section><section id="structure" class="slide level2">
+<h2>Structure</h2>
+<ul>
+<li>Technical background</li>
+<li>Container Frameworks</li>
+<li>Comparison</li>
+</ul>
+</section><section id="types-of-isolation" class="slide level2">
 <h2>Types of Isolation</h2>
 <ul>
 <li>Shared hosting</li>
@@ -84,10 +91,10 @@
 <section><section id="container-frameworks" class="title-slide slide level1"><h1>Container Frameworks</h1></section><section id="openvz" class="slide level2">
 <h2>OpenVZ</h2>
 <ul>
-<li>first containers on Linux</li>
-<li>custom Linux kernel</li>
-<li>system container</li>
-<li>checkpointing</li>
+<li>First containers on Linux</li>
+<li>Custom Linux kernel</li>
+<li>System container</li>
+<li>Checkpointing</li>
 </ul>
 <aside class="notes">
 <p>2005 - Virtuozzo - still under development although mainly used inside Virtuozzo.</p>
@@ -98,9 +105,9 @@
 </section><section id="lxclxd" class="slide level2">
 <h2>LXC/LXD</h2>
 <ul>
-<li>mainline kernel</li>
-<li>system container</li>
-<li>centralized daemon LXD</li>
+<li>Mainline kernel</li>
+<li>System container</li>
+<li>Centralized daemon LXD</li>
 <li>API to integrate into orchestration</li>
 </ul>
 <aside class="notes">
@@ -115,12 +122,12 @@ dev. <strong>Canonical</strong> &gt; released 2015</p>
 </section><section id="docker" class="slide level2">
 <h2>Docker</h2>
 <ul>
-<li>easy-to-use interface</li>
-<li>centralized daemon</li>
-<li>application container</li>
-<li>stateless data-independent images</li>
-<li>image registry</li>
-<li>build instructions (Dockerfile)</li>
+<li>Easy-to-use interface</li>
+<li>Centralized daemon</li>
+<li>Application container</li>
+<li>Stateless data-independent images</li>
+<li>Image registry</li>
+<li>Build instructions (Dockerfile)</li>
 </ul>
 <aside class="notes">
 <p>2013 &gt; container break-through<br />
@@ -159,9 +166,9 @@ development of <strong>containerd</strong> as a standalone daemon with <strong>s
 </section><section id="sec:runc" class="slide level2">
 <h2>runC</h2>
 <ul>
-<li>lightweight</li>
-<li>no centralized daemon</li>
-<li>part of the OCI</li>
+<li>Lightweight</li>
+<li>No centralized daemon</li>
+<li>Part of the OCI</li>
 </ul>
 <aside class="notes">
 <p>lightweight container runtime without a daemon <strong>now developed by the OCI</strong>.</p>
@@ -174,11 +181,11 @@ CRI-O: Unix philosophy of <em>doing one thing and doing it well</em>.</p>
 </section><section id="rkt" class="slide level2">
 <h2>rkt</h2>
 <ul>
-<li>application container</li>
-<li>encryption and signing of images</li>
-<li>no centralized daemon</li>
-<li>integrated into systemd</li>
-<li>different execution drivers</li>
+<li>Application container</li>
+<li>Encryption and signing of images</li>
+<li>No centralized daemon</li>
+<li>Integrated into systemd</li>
+<li>Different execution drivers</li>
 </ul>
 <aside class="notes">
 <p>pronounced “rocket” - developed by CoreOS project.<br />
@@ -189,7 +196,7 @@ logging is also done through systemd’s <strong>journal</strong>.</p>
 <p>Standardization &gt; uses a slightly different - App Container standard (<strong>appC</strong>)</p>
 <blockquote>
 <blockquote>
-<p><strong><em>NEXT SLIDE</em></strong></p>
+<p><strong>NEXT SLIDE</strong></p>
 </blockquote>
 </blockquote>
 <ul>
@@ -217,10 +224,10 @@ logging is also done through systemd’s <strong>journal</strong>.</p>
 </section><section id="kata-containers" class="slide level2">
 <h2>Kata Containers</h2>
 <ul>
-<li>hybrid VM containers</li>
-<li>execution inside QEMU/KVM</li>
-<li>compliance with OCI standards</li>
-<li>integration into Docker and Kubernetes</li>
+<li>Hybrid VM containers</li>
+<li>Execution inside QEMU/KVM</li>
+<li>Compliance with OCI standards</li>
+<li>Integration into Docker and Kubernetes</li>
 </ul>
 <aside class="notes">
 <p>released in 2018 – is an <strong>OCI-compliant hybrid VM container</strong> runtime that executes the application in a VM and provides the same standardized integration like containers.</p>
@@ -441,8 +448,7 @@ Docker is supported by all</strong></p>
 </ul>
 </aside>
 <!-- An interesting distinction between container frameworks is their integration into orchestration software. OpenVZ was developed inside Virtuozzo with a separate Linux kernel and some of its features are not available upstream. It is therefore only available in Virtuozzo. On top of Virtuozzo it is possible to deploy Kubernetes and OpenStack and it is possible to run Docker inside OpenVZ which makes it available in Virtuozzo. -->
-</section></section>
-<section><section id="conclusion" class="title-slide slide level1"><h1>Conclusion</h1></section><section id="conclusion-1" class="slide level2">
+</section><section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
 <ul>
 <li>Docker offers the best user experience</li>
