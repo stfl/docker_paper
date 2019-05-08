@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Container Frameworks for Linux</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="./reveal.js/css/theme/moon.css" id="theme">
+  <link rel="stylesheet" href="slides.css"/>
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? './reveal.js/css/print/pdf.css' : './reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="./reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Container Frameworks for Linux</h1>
+</section>
+
+<section><section id="introduction" class="title-slide slide level1"><h1>Introduction</h1></section><section id="types-of-isolation" class="slide level2">
+<h2>Types of Isolation</h2>
+<ul>
+<li>Shared hosting</li>
+<li>chroot</li>
+<li>Full system virtualization</li>
+<li>Operating-system-level virtualization (Containers)</li>
+<li>Hybrid VM containers</li>
+</ul>
+</section><section id="section" class="slide level2">
+<h2></h2>
+<p>What do they have in common?</p>
+</section><section id="what-are-containers" class="slide level2">
+<h2>What are containers?</h2>
+<ul>
+<li>namespaces</li>
+<li>cgroups</li>
+<li>seccomp</li>
+<li>MAC (SELinux, AppArmor, …)</li>
+</ul>
+<aside class="notes">
+<ul>
+<li><p><strong>namespaces</strong> what a process <strong>can see</strong> - view on the system. PID 1 inside, mapped differently outside<br />
+(<em>mount points, IPC, network resources and users</em>)</p></li>
+<li><p><strong>cgroups</strong> what process <strong>can use</strong> &lt; resource limitation (CPU, I/O, network, …)</p></li>
+<li><p><strong>seccomp</strong> a process can transition to a <strong>secure state</strong> where it can call only a limited <strong>subset of kernel system calls</strong>. (white-listing) Berkley Packet filter</p></li>
+<li><p><strong>MAC</strong> fine-grained control of permissions that</p></li>
+</ul>
+</aside>
+</section><section id="open-container-standardization" class="slide level2">
+<h2>Open Container Standardization</h2>
+<ul>
+<li>Image Specification</li>
+<li>Runtime Specification</li>
+<li>Container Network Interface Specification</li>
+</ul>
+<aside class="notes">
+<p>OCI under Linux Foundation - and Cloud Native Computing Foundation (CNCF)</p>
+<ul>
+<li>Image Specification defines the <strong>content of container images</strong>.</li>
+<li>Runtime Specification (CRI) <strong>configuration, execution environment and lifecycle</strong> of a container.</li>
+<li>Container Network Interface (CNI) <strong>configure network interfaces</strong></li>
+</ul>
+</aside>
+</section></section>
+<section><section id="container-frameworks" class="title-slide slide level1"><h1>Container Frameworks</h1></section><section id="openvz" class="slide level2">
+<h2>OpenVZ</h2>
+<ul>
+<li>first containers on Linux</li>
+<li>custom Linux kernel</li>
+<li>system container</li>
+<li>checkpointing</li>
+</ul>
+<aside class="notes">
+<p>2005 - Virtuozzo - still under development although mainly used inside Virtuozzo.</p>
+<p>full feature &gt; custom kernel. Many were <strong>merged upstream</strong> &gt; benefited the development of Linux container technology.</p>
+<p>system containers &gt; with a full init process &gt; closer to a full VM</p>
+<p>checkpointing with <strong>CRIU</strong> &gt; stop during execution. <strong>live migration</strong> <em>or</em>: slow-starting containers can be stored in the already started state.</p>
+</aside>
+</section><section id="lxclxd" class="slide level2">
+<h2>LXC/LXD</h2>
+<ul>
+<li>mainline kernel</li>
+<li>system container</li>
+<li>centralized daemon LXD</li>
+<li>API to integrate into orchestration</li>
+</ul>
+<aside class="notes">
+<p>After mainline added cgroups (2007), LXC released (2008) &gt; first implementation without any patches.</p>
+<!-- LXC offers stateful snapstots and live migration by using CRIU from the OpenVZ project. -->
+<p>LXD adds a layer on top of LXC. It acts as a centralized daemon for LXC.<br />
+LXC 2.0<br />
+dev. <strong>Canonical</strong> &gt; released 2015</p>
+<p>focus on the API for better integration<br />
+<strong>no network or storage management</strong> &gt; orchestration</p>
+</aside>
+</section><section id="docker" class="slide level2">
+<h2>Docker</h2>
+<ul>
+<li>easy-to-use interface</li>
+<li>centralized daemon</li>
+<li>application container</li>
+<li>stateless data-independent images</li>
+<li>image registry</li>
+<li>build instructions (Dockerfile)</li>
+</ul>
+<aside class="notes">
+<p>2013 &gt; container break-through<br />
+is still the <strong>most popular container solution</strong>.</p>
+<p>philosophy <strong>hide complexity behind simplicity</strong>. CLI significantly simplified previously complex tasks.</p>
+<!-- **Initially Docker used LXC** - later developed its own runtime **runC** (donated to OCI) \ -->
+<!-- explained again later -->
+<p>concept that a single container only runs a <strong>single process</strong>. (web server, database) If the process terminates, the container terminates with it. -&gt; also the data inside -&gt; this is achieved with filesystem layers. statless data-independent image</p>
+<p>Many of these applications are available as ready-to-use <strong>images</strong> which can be <strong>shared via a registry</strong> &gt; DockerHub</p>
+</aside>
+</section><section id="docker-container-layers" class="slide level2">
+<h2>Docker container layers</h2>
+<p><img data-src="images/container-layers.jpg" style="width:80.0%" /></p>
+<aside class="notes">
+<p>If the process terminates, the container terminates with it. -&gt; also the data inside -&gt; this is achieved with filesystem layers. statless data-independent image</p>
+<p>Many of these applications are available as ready-to-use <strong>images</strong> which can be <strong>shared via a registry</strong> &gt; DockerHub</p>
+<p><strong>Differences</strong> to the layer underneath. <strong>Storage efficiency</strong>.</p>
+<p>re-use other images as the base.</p>
+<p><strong>Dockerfile</strong> build instructions - <strong>automatically generate images</strong> (new version of the application)<br />
+part of the build process</p>
+<!-- Docker supports multiple network drivers\ [@DockerNetworkingDocumentation] which allow networking interfaces to act as a *bridge*, where the virtual Docker network is separated from the host network; *host*, where the container has direct access to the hosts network interface; *overlay*, where a virtual network is created between multiple hosts that run the Docker daemon and *macvlan*, where each container gets a unique address on the host's network. Docker also allows third-party networking plugins to be used. -->
+</aside>
+</section><section id="docker-architecture" class="slide level2">
+<h2>Docker architecture</h2>
+<p><img data-src="images/docker-engine-arch.png" style="width:100.0%" /></p>
+<aside class="notes">
+<p><strong>Docker</strong> is not just a container runtime &gt; many software components<br />
+most people interact with the so-called <strong>Docker Engine</strong> (CLI)<br />
+which interacts with the daemon <strong>containerd</strong><br />
+which uses <strong>runC</strong> to execute the container</p>
+<p>other runtimes can be integrated as well<br />
+Initially Docker used LXC as its container runtime <strong>runC</strong> which was donated to the OCI.</p>
+<p>frequent <strong>API changes</strong> which was <strong>difficult to integrate</strong> in other systems which favor a stable API.<br />
+development of <strong>containerd</strong> as a standalone daemon with <strong>stable API</strong> donated to the OCI.</p>
+</aside>
+</section><section id="sec:runc" class="slide level2">
+<h2>runC</h2>
+<ul>
+<li>lightweight</li>
+<li>no centralized daemon</li>
+<li>part of the OCI</li>
+</ul>
+<aside class="notes">
+<p>lightweight container runtime without a daemon <strong>now developed by the OCI</strong>.</p>
+<p>full control over the execution of the container<br />
+development of <strong>other solutions on top runC</strong></p>
+<p>example is CRI-O (2017) - lightweight and simple container runtime developed by Red Hat as a minimal container runtime for <em>Kubernetes</em>.<br />
+CRI-O: Unix philosophy of <em>doing one thing and doing it well</em>.</p>
+<!-- Another example is Garden\ [@GardenCloudFoundry], which is the containerization layer in the CloudFoundry orchestration software [@CloudFoundryOpen]. Garden started by using LXC and later moved to runC as their container runtime. -->
+</aside>
+</section><section id="rkt" class="slide level2">
+<h2>rkt</h2>
+<ul>
+<li>application container</li>
+<li>encryption and signing of images</li>
+<li>no centralized daemon</li>
+<li>integrated into systemd</li>
+<li>different execution drivers</li>
+</ul>
+<aside class="notes">
+<p>pronounced “rocket” - developed by CoreOS project.<br />
+Rkt introduced encryption and signing of images.<br />
+it can <em>also</em> execute Docker images.</p>
+<p>no centralized daemon - containers are started and managed directly through <strong>systemd</strong><br />
+logging is also done through systemd’s <strong>journal</strong>.</p>
+<p>Standardization &gt; uses a slightly different - App Container standard (<strong>appC</strong>)</p>
+<blockquote>
+<blockquote>
+<p><strong><em>NEXT SLIDE</em></strong></p>
+</blockquote>
+</blockquote>
+<ul>
+<li><strong>systemd-nspawnd</strong> uses the cgroups and namespaces invoked from systemd.</li>
+<li><strong>fly</strong> executes the process in a chroot without further isolation.</li>
+<li><strong>KVM</strong> uses a fully virtualized environment.</li>
+</ul>
+<p>Other options for are available as plugins.</p>
+<p>It seems that developers have stopped actively developing rkt when CoreOS was bought by Red Hat in Spring 2018. There is no official announcement but the last commit on GitHub was in May 2018.</p>
+</aside>
+</section><section id="execution-hierarchy-docker-and-rkt" class="slide level2">
+<h2>Execution hierarchy Docker and rkt</h2>
+<p><img data-src="images/docker_rkt_exec_structure.gif" style="width:70.0%" /></p>
+<aside class="notes">
+<p>GO BACK</p>
+<!-- Rkt project uses the App Container standard (appC) [@AppContainerSpecification] which was later included in the OCI standards. The appC standard is similar to the OCI standards with a few differences [@AppContainerSpecification2019README]. -->
+<!-- [> The project compares in  the appC standards to the OCI standard as follows:  <] -->
+<!-- [> "*The App Container Image format (ACI) is maps more or less directly to the OCI Image Format Specification, with the exception of signing and dependencies. <] -->
+<!-- [> The App Container Executor (ACE) specification is related conceptually to the OCI Runtime Specification, with the notable distinctions that the latter does not support pods and generally operates at a lower level of specification. <] -->
+<!-- [> App Container Image Discovery does not yet have an equivalent specification in the OCI project.*" <] -->
+<!-- AppC uses a so-called *pod* as the basic unit of execution. A pod is a group of one or more services that is logically related [@CoreOSRktApp]. -->
+<!-- [> the basic unit of execution. "*A pod is a grouping of one or more app images (ACIs), with some additional metadata optionally applied to the pod as a whole.*"[@CoreOSRktApp] This allows configuration of --- for example --- resource constraints and networking for multiple containers from a single point. <] -->
+<!-- The concept of pods in rkt is identical to the concept of pods in Kubernetes\ [@WhatKubernetesUsers]. Rkt became the first non-Docker runtime to be supported by Kubernetes\ [@RktnetesBringsRkt]. -->
+</aside>
+</section><section id="kata-containers" class="slide level2">
+<h2>Kata Containers</h2>
+<ul>
+<li>hybrid VM containers</li>
+<li>execution inside QEMU/KVM</li>
+<li>compliance with OCI standards</li>
+<li>integration into Docker and Kubernetes</li>
+</ul>
+<aside class="notes">
+<p>released in 2018 – is an <strong>OCI-compliant hybrid VM container</strong> runtime that executes the application in a VM and provides the same standardized integration like containers.</p>
+<p>Merge of Hyper runV and Intel Clear Containers, which focused on <strong>securing the runtime environment</strong><br />
+developed under the <strong>OpenStack foundation</strong></p>
+<p>Kata Containers uses a minimal version of QEMU for virtualization.</p>
+</aside>
+</section><section id="intergration-with-cri-o" class="slide level2">
+<h2>Intergration with CRI-O</h2>
+<p><img data-src="images/cri-o-kata.jpg" id="fig:cri-o-kata" style="width:80.0%" /></p>
+<aside class="notes">
+<p>because Kata is OCI compliant, it can be integrated into the lightweight runtime for Kubernetes CRI-O.<br />
+It can act as a more secure replacement for runC.</p>
+</aside>
+</section><section id="intergration-into-kubernetes" class="slide level2">
+<h2>Intergration into Kubernetes</h2>
+<p><img data-src="images/kubernetesandkatacontainers.jpg" id="fig:kata-kubernets" style="width:90.0%" /></p>
+<aside class="notes">
+<p>it can be integrated into Docker’s <strong>containerd</strong>, the lightweight runtime for Kubernets <strong>CRI-O</strong> or directly in Kubernets with frakti</p>
+</aside>
+</section><section id="other-frameworks" class="slide level2">
+<h2>Other Frameworks</h2>
+<!-- There are many other solutions available. Some noticeable projects are: -->
+<ul>
+<li>systemd-nspawnd</li>
+<li>gVisor</li>
+<li>Nabla containers</li>
+<li>Singularity</li>
+<li>Firecracker MicroVM</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>systemd-nspawnd is part of systemd and can manage containers directly from systemd.</li>
+<li>gVisor attempts to secure containers by providing a user space kernel abstraction which processes the system calls used by the container process.</li>
+<li>Nabla containers tries to secure containers by restricting the kernel system calls with a strict seccomp profile that allows only 7 system calls.</li>
+<li>Singularity is a container framework intended for scientific computing where operations are executed on many servers in a high performance cluster.</li>
+</ul>
+<p><strong>Firecracker MicroVM</strong> VM developed by Amazon as a faster replacement for QEMU.<br />
+only emulates 4 devices for networking, block devices, serial console and a 1-button keyboard controller. This minimalistic design enables a <strong>startup time of less than 125ms</strong>.</p>
+</aside>
+</section></section>
+<section><section id="comparison" class="title-slide slide level1"><h1>Comparison</h1></section><section id="comparison-1" class="slide level2">
+<h2>Comparison</h2>
+<!-- This section compares various characteristics of the previously introduced container frameworks and the availability of their frameworks in different orchestrator solutions. -->
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Frame- work</th>
+<th>Release</th>
+<th>Isolation</th>
+<th>Sys/App container</th>
+<th>Central daemon</th>
+<th>Live migration</th>
+<th>Resource quotas</th>
+<th>OCI compliant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>OpenVZ</td>
+<td>2005</td>
+<td>Kernel</td>
+<td>System</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td>LXC</td>
+<td>2008</td>
+<td>Kernel</td>
+<td>System</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td>Docker</td>
+<td>2014</td>
+<td>Kernel</td>
+<td>App</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>LXD</td>
+<td>2016</td>
+<td>Kernel</td>
+<td>System</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td>runC</td>
+<td>2016</td>
+<td>Kernel</td>
+<td>App</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>rkt</td>
+<td>2016</td>
+<td>Kernel</td>
+<td>App</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>partial</td>
+</tr>
+<tr class="odd">
+<td>Kata Containers</td>
+<td>2018</td>
+<td>VM</td>
+<td>App</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>runC table version 1.0 has not yet been released.</p>
+<p><span class="citation" data-cites="Tbl:comp_char">@Tbl:comp_char</span> presents some characteristics of the presented container frameworks. It shows the release year of the framework and the underlying isolation strategy. Traditional container frameworks offer isolation through Linux Kernel mechanisms and Kata Containers offers isolation through full system virtualization. Some containers are designed as system containers while other – newer frameworks, starting with Docker – are application containers. The only two container frameworks with a centralized daemon are Docker and LXD, whereas LXD is essentially a daemon for LXC. All frameworks but rkt support live migration while the container solutions use CRIU. Kata containers does not yet support a snapshotting feature. All container frameworks allow the specification of CPU, network, I/O and memory quotas and are therefore not listed separately. Not all frameworks are OCI compliant because OCI standardization focuses on application containers. Docker – which uses runC internally – is OCI compliant. Rkt does not fully comply to the OCI standard and Kata containers was developed after the standardization and is one of the first container frameworks that focuses on OCI compliance from the start.</p>
+</aside>
+</section><section id="integration" class="slide level2">
+<h2>Integration</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Orchestrator→ Container ↓</th>
+<th>Kubernetes</th>
+<th>OpenStack</th>
+<th>CloudFoundry</th>
+<th>Mesos</th>
+<th>Virtuozzo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>OpenVZ</td>
+<td>yes<span class="math inline"><em></em><sup>1</sup></span></td>
+<td>yes<span class="math inline"><em></em><sup>1</sup></span></td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>LXC/LXD</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td>Docker</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes<span class="math inline"><em></em><sup>2</sup></span></td>
+</tr>
+<tr class="even">
+<td>runC</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td>rkt</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td>Kata Containers</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p><strong>k8s and OpenStack supports all the containers<br />
+Docker is supported by all</strong></p>
+<p>CloudFoundy supports Docker and integrated runC into there containerization engine.</p>
+<p>Apache Mesos offers support for Docker alongside their own containerization implementation.</p>
+<ul>
+<li>Mesos has its own containerization engine.</li>
+<li>k8s, OpenStack in OpenVZ on top of Virtuozzo.</li>
+<li>Docker on Virtuozzo Inside OpenVZ containers.</li>
+</ul>
+</aside>
+<!-- An interesting distinction between container frameworks is their integration into orchestration software. OpenVZ was developed inside Virtuozzo with a separate Linux kernel and some of its features are not available upstream. It is therefore only available in Virtuozzo. On top of Virtuozzo it is possible to deploy Kubernetes and OpenStack and it is possible to run Docker inside OpenVZ which makes it available in Virtuozzo. -->
+</section></section>
+<section><section id="conclusion" class="title-slide slide level1"><h1>Conclusion</h1></section><section id="conclusion-1" class="slide level2">
+<h2>Conclusion</h2>
+<ul>
+<li>Docker offers the best user experience</li>
+<li>runC can easily be built upon</li>
+<li>Kata Containers for increased isolation</li>
+</ul>
+<aside class="notes">
+<p>Docker: easy-to-use <strong>CLI</strong> and API and large selection of readily available images.<br />
+containerd -&gt; modular design which allows integration into orchestrator software and allows the underlaying.</p>
+<p><strong>runC</strong> when <strong>control over the runtime</strong> is required for <strong>full integration</strong> into other solutions.</p>
+<p>Kata <strong>controlling the virtualization layer</strong> and directly <strong>integrating into the hypervisor</strong>.<br />
+improved performance</p>
+</aside>
+</section></section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/lib/js/head.min.js"></script>
+  <script src="./reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: './reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: './reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

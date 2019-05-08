@@ -1,0 +1,15 @@
+#title-slide {
+  //width: 1200px;
+  font-size: 80%;
+}
+
+section#comparison-1.slide.level2.present>table {
+  font-size: 70%;
+  margin-left: -10%;
+}
+
+section#integration.slide.level2.present>table {
+  font-size: 70%;
+  margin-left: -2%;
+}
+
