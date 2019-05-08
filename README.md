@@ -1,4 +1,6 @@
 
+Available online thanks to github pages: https://stfl.github.io/docker_paper/slides.html
+
 generate PDF with pandoc Latex
 
 ~~~
