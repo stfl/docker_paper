@@ -34,13 +34,16 @@
 
 <section id="title-slide">
   <h1 class="title">Container Frameworks for Linux</h1>
+  <p class="subtitle">Seminar Operating Systems and Software Engineering<br />
+<br />
+Stefan Lendl</p>
 </section>
 
 <section><section id="introduction" class="title-slide slide level1"><h1>Introduction</h1></section><section id="structure" class="slide level2">
 <h2>Structure</h2>
 <ul>
 <li>Technical background</li>
-<li>Container Frameworks</li>
+<li>Container frameworks</li>
 <li>Comparison</li>
 </ul>
 </section><section id="types-of-isolation" class="slide level2">
@@ -49,7 +52,7 @@
 <li>Shared hosting</li>
 <li>chroot</li>
 <li>Full system virtualization</li>
-<li>Operating-system-level virtualization (Containers)</li>
+<li>Operating-system-level virtualization (containers)</li>
 <li>Hybrid VM containers</li>
 </ul>
 </section><section id="section" class="slide level2">
@@ -61,7 +64,7 @@
 <li>namespaces</li>
 <li>cgroups</li>
 <li>seccomp</li>
-<li>MAC (SELinux, AppArmor, …)</li>
+<li>MAC</li>
 </ul>
 <aside class="notes">
 <ul>
@@ -69,15 +72,15 @@
 (<em>mount points, IPC, network resources and users</em>)</p></li>
 <li><p><strong>cgroups</strong> what process <strong>can use</strong> &lt; resource limitation (CPU, I/O, network, …)</p></li>
 <li><p><strong>seccomp</strong> a process can transition to a <strong>secure state</strong> where it can call only a limited <strong>subset of kernel system calls</strong>. (white-listing) Berkley Packet filter</p></li>
-<li><p><strong>MAC</strong> fine-grained control of permissions that</p></li>
+<li><p><strong>MAC</strong> fine-grained control of permissions that (SELinux, AppArmor, …)</p></li>
 </ul>
 </aside>
 </section><section id="open-container-standardization" class="slide level2">
 <h2>Open Container Standardization</h2>
 <ul>
-<li>Image Specification</li>
-<li>Runtime Specification</li>
-<li>Container Network Interface Specification</li>
+<li>Image specification</li>
+<li>Runtime specification</li>
+<li>Container network interface specification</li>
 </ul>
 <aside class="notes">
 <p>OCI under Linux Foundation - and Cloud Native Computing Foundation (CNCF)</p>

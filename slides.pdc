@@ -1,5 +1,10 @@
 ---
 title: Container Frameworks for Linux
+subtitle: Seminar Operating Systems and Software Engineering \
+
+  \
+
+  Stefan Lendl
 lang: en
 ---
 
@@ -8,7 +13,7 @@ lang: en
 ## Structure
 
 - Technical background
-- Container Frameworks
+- Container frameworks
 - Comparison
 
 ## Types of Isolation
@@ -16,7 +21,7 @@ lang: en
 - Shared hosting
 - chroot
 - Full system virtualization
-- Operating-system-level virtualization (Containers)
+- Operating-system-level virtualization (containers)
 - Hybrid VM containers
 
 ##
@@ -28,7 +33,7 @@ What do they have in common?
 - namespaces
 - cgroups
 - seccomp
-- MAC (SELinux, AppArmor, ...)
+- MAC
 
 ::: notes
 
@@ -41,14 +46,15 @@ What do they have in common?
 Berkley Packet filter
 
 - **MAC** fine-grained control of permissions that
+(SELinux, AppArmor, ...)
 
 :::
 
 ## Open Container Standardization
 
-- Image Specification
-- Runtime Specification
-- Container Network Interface Specification
+- Image specification
+- Runtime specification
+- Container network interface specification
 
 ::: notes
 
